@@ -16,9 +16,9 @@ public class Naviera {
 	}
 	
 	
-	public void addBuque( Buque buque) { flota.add(buque);}
+	public void addBuque(Buque buque) { flota.add(buque);}
 	
-	public void addCircuito( CircuitoMaritimo circuito) { circuitos.add(circuito);}
+	public void addCircuito(CircuitoMaritimo circuito) { circuitos.add(circuito);}
 	
 
 	

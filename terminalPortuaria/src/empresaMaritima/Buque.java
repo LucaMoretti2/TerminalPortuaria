@@ -2,6 +2,8 @@ package empresaMaritima;
 
 import java.util.Set;
 
+import containers.Container;
+
 public class Buque {
 	
 	String nombreBuque;
