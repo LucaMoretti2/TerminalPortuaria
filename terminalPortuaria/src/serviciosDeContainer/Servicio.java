@@ -10,5 +10,11 @@ public abstract class Servicio {
 		this.precioFijo = precioFijo;
 	}
 	
-	public abstract double calcularCosto(Container c);
+	public double calcularCosto(Container container) {
+		double costoBase = this.precioFijo;
+		double costoVariable = this.calcularCostoVariable(container);
+		return costoBase + costoVariable;
+	}
+	
+	protected abstract double calcularCostoVariable(Container container);
 }

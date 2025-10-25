@@ -10,9 +10,9 @@ public class Pesado extends Servicio {
 	}
 
 	@Override
-	public double calcularCosto(Container c) {
+	public double calcularCostoVariable(Container container) {
 		// TODO Auto-generated method stub
-		return precioFijo;
+		return 0;
 	}
 
 }

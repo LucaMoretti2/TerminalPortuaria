@@ -14,7 +14,7 @@ public class Almacenamiento extends Servicio {
 	}
 
 	@Override
-	public double calcularCosto(Container c) {
+	public double calcularCostoVariable(Container c) {
 		// TODO Auto-generated method stub
 		Duration duracion = Duration.between(c.getFechaDeIngreso(), c.getFechaDeRetiro());
         long diasEnTerminal = duracion.toDays();

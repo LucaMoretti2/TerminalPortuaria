@@ -8,8 +8,8 @@ public class Lavado extends Servicio {
 	double precioMayorSetenta;
 	double precioMenorSetenta;
 	
-	public Lavado(double volumenPorContainer, double precioMayorSetenta, double precioMenorSetenta) {
-		super(0);
+	public Lavado(double precioFijo, double volumenPorContainer, double precioMayorSetenta, double precioMenorSetenta) {
+		super(precioFijo);
 		// TODO Auto-generated constructor stub
 		this.volumenPorContainer = volumenPorContainer;
 		this.precioMayorSetenta = precioMayorSetenta;
@@ -17,7 +17,7 @@ public class Lavado extends Servicio {
 	}
 	
 	@Override
-	public double calcularCosto(Container c) {
+	public double calcularCostoVariable(Container c) {
 		// TODO Auto-generated method stub
 		double volumen = c.getAncho() * c.getLargo() * c.getAlto();
 		if (volumen > 70) {
