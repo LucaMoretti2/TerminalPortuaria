@@ -1,4 +1,4 @@
-package tramo;
+package empresaMaritima;
 
 import java.util.Date;
 

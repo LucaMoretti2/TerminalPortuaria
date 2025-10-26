@@ -3,11 +3,10 @@ package empresaMaritima;
 	import java.util.ArrayList;
 	import java.util.List;
 
-	import tramo.Tramo;
-
 	public class CircuitoMaritimo {
-		    private String nombre;
-		    private List<Tramo> tramos;
+		    
+		private String nombre;
+		private List<Tramo> tramos;
 
 		
 		    public CircuitoMaritimo(String nombre) {
