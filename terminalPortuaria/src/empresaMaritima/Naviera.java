@@ -10,11 +10,7 @@ public class Naviera {
 	
 	Set<CircuitoMaritimo> circuitos;
 	
-	public Naviera(String nombre) {
-		
-		this.nombre = nombre;
-	}
-	
+	public Naviera(String nombre) {this.nombre = nombre;}
 	
 	public void addBuque(Buque buque) { flota.add(buque);}
 	
