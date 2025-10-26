@@ -10,7 +10,7 @@ public class TerminalGestionada {
 	List<Naviera> navieras;
 	List<CircuitoMaritimo> circuitos;
 	List<ActorPortuario> actores;
-	List<EmpresasTransportistas> empresasTransportistas;
+	List<EmpresaTransportista> empresasTransportistas;
 	List<Camion> camiones;
 	List<Chofer> choferes;
 		
@@ -42,7 +42,7 @@ public class TerminalGestionada {
 		choferes.add(chofer);
 	}
 		
-	public CircuitoMaritimo buscarRuta(TerminalPortuaria terminal) {
+	public CircuitoMaritimo buscarRuta(TerminalGestionada terminal) {
 		return this.motorDeBusqueda.buscar(terminal);
 	}
 }

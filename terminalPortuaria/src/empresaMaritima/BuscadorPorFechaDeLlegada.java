@@ -10,7 +10,7 @@ public class BuscadorPorFechaDeLlegada implements BuscadorDeTrayectosStrategy {
     }
 	
 	@Override
-	public List<CircuitoMaritimo> buscar(String destino) {
+	public List<CircuitoMaritimo> buscar(TerminalGestionada destino) {
 		// TODO Auto-generated method stub
 		return null;
 	}
