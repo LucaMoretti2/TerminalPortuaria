@@ -4,7 +4,7 @@ import containers.Container;
 
 public abstract class Servicio {
 	
-	public double precioFijo;
+	protected double precioFijo;
 	
 	public Servicio(double precioFijo) {
 		this.precioFijo = precioFijo;

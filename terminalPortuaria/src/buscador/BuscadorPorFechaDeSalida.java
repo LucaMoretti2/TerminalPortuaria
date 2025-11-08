@@ -1,6 +1,9 @@
-package empresaMaritima;
+package buscador;
 
 import java.util.List;
+
+import empresaMaritima.CircuitoMaritimo;
+import empresaMaritima.TerminalGestionada;
 
 public class BuscadorPorFechaDeSalida implements BuscadorDeTrayectosStrategy {
 	List<CircuitoMaritimo> circuitos;

@@ -10,5 +10,12 @@ public class Consignee implements ActorPortuario {
 		System.out.println("Consignee recibió: " + mensaje);
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public int getIdCliente() {
+		return idCliente;
+	}
 }
 

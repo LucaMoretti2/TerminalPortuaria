@@ -1,5 +1,6 @@
-package empresaMaritima;
+package estadosBuque;
 
+import empresaMaritima.Buque;
 
 public class Outbound implements EstadoDelBuque{
 

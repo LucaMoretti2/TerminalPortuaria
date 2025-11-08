@@ -1,6 +1,11 @@
 package empresaMaritima;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
+import buscador.BuscadorDeTrayectosStrategy;
+import containers.Container;
 
 public class TerminalGestionada {
 	
@@ -13,6 +18,7 @@ public class TerminalGestionada {
 	List<EmpresaTransportista> empresasTransportistas;
 	List<Camion> camiones;
 	List<Chofer> choferes;
+	List<Orden> ordenes = new ArrayList<>();
 		
 	public TerminalGestionada(double posicion) {
 		this.posicion = posicion;
@@ -45,4 +51,16 @@ public class TerminalGestionada {
 	public CircuitoMaritimo buscarRuta(TerminalGestionada terminal) {
 		return this.motorDeBusqueda.buscar(terminal);
 	}
+	
+	public void registrarOrdenDeExportacion(Shipper shipper, Container container, Viaje viaje, Camion camion, Chofer chofer, LocalDateTime turno) {
+		OrdenDeExportacion orden = new OrdenDeExportacion(container, viaje, shipper, camion, chofer, turno);
+		ordenes.add(orden);
+	}
+	
+	public void registrarOrdenDeImportacion(Consignee consignee, Container container, Viaje viaje, LocalDateTime llegada) {
+		OrdenDeImportacion orden = new OrdenDeImportacion(container, viaje, consignee, llegada);
+		ordenes.add(orden);
+		
+	}
+	
 }

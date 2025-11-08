@@ -1,4 +1,6 @@
-package empresaMaritima;
+package estadosBuque;
+
+import empresaMaritima.Buque;
 
 public class Inbound implements EstadoDelBuque{
 

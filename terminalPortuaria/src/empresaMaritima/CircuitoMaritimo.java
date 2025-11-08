@@ -45,8 +45,17 @@ package empresaMaritima;
 		        }
 		        return total;
 		    }
-
-		    // Falta mostrar el circuito
+		    
+		    public long calcularDuracionHasta(TerminalGestionada destino) {
+		        long totalHoras = 0;
+		        for (Tramo tramo : tramos) {
+		            totalHoras += tramo.getDuracionEnHoras();
+		            if (tramo.getTerminalDestino().equals(destino)) {
+		                return totalHoras;
+		            }
+		        }
+				return totalHoras;
+		    }
 	}
 
 
