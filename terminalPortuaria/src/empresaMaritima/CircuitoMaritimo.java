@@ -6,7 +6,7 @@ package empresaMaritima;
 	public class CircuitoMaritimo {
 		    
 		private String nombre;
-		private List<Tramo> tramos;
+		private List<Tramo> tramos =new ArrayList<>();
 
 		
 		    public CircuitoMaritimo(String nombre) {

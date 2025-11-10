@@ -26,7 +26,9 @@ public class Inbound implements EstadoDelBuque{
 
 	//Se envia email a los consignees por el arribo del buque
 	@Override
-	public void notificar() {}
+	public void notificar() {
+		
+	}
 
 	@Override
 	public void realizarPagosNecesarios() {

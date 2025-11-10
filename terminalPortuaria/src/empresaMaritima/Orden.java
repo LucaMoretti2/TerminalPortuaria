@@ -13,7 +13,7 @@ public abstract class Orden {
 	Container container;
 	Viaje viaje;
 	LocalDateTime fechaDeRegistro;
-	List<Servicio> servicios;
+	List<Servicio> servicios = new ArrayList<>();
 	double costoTotal;
 	
 	public Orden(Container container, Viaje viaje) {

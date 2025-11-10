@@ -8,7 +8,7 @@ import estadosBuque.EstadoDelBuque;
 
 public class Buque {
 	
-	String nombreBuque;
+	public String nombreBuque;
 	
 	Double gps;
 	

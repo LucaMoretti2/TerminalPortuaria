@@ -6,18 +6,19 @@ import java.util.List;
 
 import buscador.BuscadorDeTrayectosStrategy;
 import containers.Container;
+import reportes.ReporteVisitor;
 
-public class TerminalGestionada {
+public class TerminalGestionada implements reportes.ReporteVisitable {
 	
-	//TerminalGestionada instanciaUnica;
+
 	double posicion;
 	BuscadorDeTrayectosStrategy motorDeBusqueda;
-	List<Naviera> navieras;
-	List<CircuitoMaritimo> circuitos;
-	List<ActorPortuario> actores;
-	List<EmpresaTransportista> empresasTransportistas;
-	List<Camion> camiones;
-	List<Chofer> choferes;
+	List<Naviera> navieras = new ArrayList<>();
+	List<CircuitoMaritimo> circuitos = new ArrayList<>();
+	List<ActorPortuario> actores = new ArrayList<>();
+	List<EmpresaTransportista> empresasTransportistas = new ArrayList<>();
+	List<Camion> camiones = new ArrayList<>();
+	List<Chofer> choferes = new ArrayList<>();
 	List<Orden> ordenes = new ArrayList<>();
 		
 	public TerminalGestionada(double posicion) {
@@ -36,6 +37,9 @@ public class TerminalGestionada {
 		actores.add(actor);
 	}
 		
+	public void eliminarActorPortuario(ActorPortuario actor) {
+		actores.remove(actor);
+	}
 	public void registrarEmpresaTransportista(EmpresaTransportista empresa) {
 		empresasTransportistas.add(empresa);
 	}
@@ -62,5 +66,24 @@ public class TerminalGestionada {
 		ordenes.add(orden);
 		
 	}
-	
+	private void notificarConsignees(String mensaje) {
+	    for (ActorPortuario actor : actores) {
+	        if (actor instanceof Consignee) {
+	            actor.notificar(mensaje);
+	        }
+	    }
+	}
+
+	private void notificarShippers(String mensaje) {
+	    for (ActorPortuario actor : actores ) {
+	        if (actor instanceof Shipper) {
+	            actor.notificar(mensaje);
+	        }
+	    }
+	}
+
+	@Override
+	public void accept(reportes.ReporteVisitor visitor) {
+	    visitor.visitarTerminal(this);
+	}
 }

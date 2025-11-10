@@ -1,6 +1,7 @@
 package containers;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import serviciosDeContainer.Servicio;
@@ -12,7 +13,7 @@ public abstract class Container {
 	int largo;
 	double pesoTotal;
 	String idContainer; //4 letras 7 numeros
-	List<Servicio> servicios;
+	List<Servicio> servicios = new ArrayList<>();
 	LocalDateTime fechaDeIngreso; //a evaluar 
 	LocalDateTime fechaDeRetiro; //a evaluar 
 	

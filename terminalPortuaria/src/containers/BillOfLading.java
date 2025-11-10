@@ -1,5 +1,7 @@
 package containers;
 
+import empresaMaritima.Consignee;
+
 public class BillOfLading {
 	
 	String tipoDeProducto;
