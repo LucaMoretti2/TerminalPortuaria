@@ -2,6 +2,9 @@ package empresaMaritima;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+
+import containers.Container;
 
 
 public class Viaje {
@@ -54,12 +57,17 @@ public class Viaje {
 		return naviera;
 	}
 	
-	public LocalDateTime getFechaINicio() {
+
+	public LocalDateTime getArribo() {
+		return fechaArriboDestino;
+	}
+	
+	public LocalDateTime getPartida() {
 		return fechaInicio;
 	}
 	
-	public LocalDateTime getFechaArriboDestino() {
-		return fechaArriboDestino;
+	public Set<Container> getContenedores(){
+		return buque.cargas;
 	}
 	
 	

@@ -15,6 +15,7 @@ public class Reefer extends Container {
 	public Reefer(int alto, int ancho, int largo, double pesoTotal, String idContainer, double consumoPorHora, LocalDateTime fechaDeIngreso, LocalDateTime fechaDeRetiro) {
 		super(alto, ancho, largo, pesoTotal, idContainer, fechaDeRetiro, fechaDeRetiro);
 		this.consumoPorHora = consumoPorHora;
+		this.tipo = "Reefer";
 	
 	}
 	

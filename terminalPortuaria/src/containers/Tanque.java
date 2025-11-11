@@ -13,6 +13,7 @@ public class Tanque extends Container {
 		// TODO Auto-generated constructor stub
 		this.tipoDeLiquido = tipoDeLiquido;
 		this.capacidadDeLitros = capacidadDeLitros;
+		this.tipo = "Tanque";
 	}
 	
 	public double getCapacidadDeLitros(){

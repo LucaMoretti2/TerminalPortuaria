@@ -60,5 +60,9 @@ public class Buque {
 		for (Observer obs : observadores) { obs.actualizarEvento(this);} //posiblemente necesite de mas parametros
 	
 	}
+	
+	public String getNombre() {
+		return nombreBuque;
+	}
 }
 

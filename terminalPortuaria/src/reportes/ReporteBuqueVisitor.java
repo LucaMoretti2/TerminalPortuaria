@@ -17,7 +17,7 @@ public class ReporteBuqueVisitor implements ReporteVisitor {
         for (Orden o : terminal.getOrdenes()) {
             if (o instanceof OrdenDeImportacion) {
                 xml.append("    <item>")
-                   .append(o.getContainer().getId())
+                   .append(o.getContainer().getIDContainer())
                    .append("</item>\n");
             }
         }
@@ -27,7 +27,7 @@ public class ReporteBuqueVisitor implements ReporteVisitor {
         for (Orden o : terminal.getOrdenes()) {
             if (o instanceof OrdenDeExportacion) {
                 xml.append("    <item>")
-                   .append(o.getContainer().getId())
+                   .append(o.getContainer().getIDContainer())
                    .append("</item>\n");
             }
         }

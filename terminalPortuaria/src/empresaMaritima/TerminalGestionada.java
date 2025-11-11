@@ -66,6 +66,11 @@ public class TerminalGestionada implements reportes.ReporteVisitable {
 		ordenes.add(orden);
 		
 	}
+	
+	public List<Orden> getOrdenes(){
+		return ordenes;
+	}
+	
 	private void notificarConsignees(String mensaje) {
 	    for (ActorPortuario actor : actores) {
 	        if (actor instanceof Consignee) {

@@ -11,6 +11,7 @@ public class Dry extends Container {
 	
 	public Dry(int alto, int ancho, int largo, double pesoTotal, String idContainer, LocalDateTime fechaDeIngreso, LocalDateTime fechaDeRetiro) {
 		super(alto, ancho, largo, pesoTotal, idContainer, fechaDeIngreso, fechaDeRetiro);
+		this.tipo = "Dry";
 		// TODO Auto-generated constructor stub
 	}
 

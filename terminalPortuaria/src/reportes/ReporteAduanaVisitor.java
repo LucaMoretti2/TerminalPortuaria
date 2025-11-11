@@ -18,7 +18,7 @@ public class ReporteAduanaVisitor implements ReporteVisitor {
                 .append("Partida: ").append(o.getViaje().getPartida()).append("</p>")
                 .append("<ul>");
             o.getViaje().getContenedores().forEach(c ->
-                html.append("<li>").append(c.getTipo()).append(" - ").append(c.getId()).append("</li>")
+                html.append("<li>").append(c.getTipo()).append(" - ").append(c.getIDContainer()).append("</li>")
             );
             html.append("</ul>");
         }

@@ -35,6 +35,14 @@ public abstract class Orden {
 		return costoHastaAhora;
 	}
 	
+	public Viaje getViaje() {
+		return viaje;
+	}
+	
+	public Container getContainer() {
+		return container;
+	}
+	
 	public abstract double calcularCostoTotal();
 	
 	public abstract String getResposablePago();

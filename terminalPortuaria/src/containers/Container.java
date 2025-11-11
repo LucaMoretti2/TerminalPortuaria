@@ -16,6 +16,7 @@ public abstract class Container {
 	List<Servicio> servicios = new ArrayList<>();
 	LocalDateTime fechaDeIngreso; //a evaluar 
 	LocalDateTime fechaDeRetiro; //a evaluar 
+	String tipo;
 	
 	
 	public Container(int alto, int ancho, int largo, double pesoTotal, String idContainer, LocalDateTime fechaDeIngreso, LocalDateTime fechaDeRetiro) {
@@ -71,7 +72,11 @@ public abstract class Container {
     	}
     	return costoHastaAhora;
     }
-    	
+    
+    public String getTipo() {
+    	return tipo;
+    }
+
 	
 	
 
