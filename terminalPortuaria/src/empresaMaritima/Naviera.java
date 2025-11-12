@@ -6,15 +6,31 @@ public class Naviera {
 	
 	public String nombre;
 	
-	Set<Buque> flota ;
+	private Set<Buque> flota ;
 	
-	Set<CircuitoMaritimo> circuitos;
+	private Set<CircuitoMaritimo> circuitos;
 	
 	public Naviera(String nombre) {this.nombre = nombre;}
 	
-	public void addBuque(Buque buque) { flota.add(buque);}
+	public void addBuque(Buque buque) { getFlota().add(buque);}
 	
-	public void addCircuito(CircuitoMaritimo circuito) { circuitos.add(circuito);}
+	public void addCircuito(CircuitoMaritimo circuito) { getCircuitos().add(circuito);}
+
+	public Set<CircuitoMaritimo> getCircuitos() {
+		return circuitos;
+	}
+
+	public void setCircuitos(Set<CircuitoMaritimo> circuitos) {
+		this.circuitos = circuitos;
+	}
+
+	public Set<Buque> getFlota() {
+		return flota;
+	}
+
+	public void setFlota(Set<Buque> flota) {
+		this.flota = flota;
+	}
 	
 
 	

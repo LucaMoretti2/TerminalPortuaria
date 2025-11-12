@@ -5,8 +5,10 @@ import java.util.*;
 
 import containers.Container;
 import estadosBuque.EstadoDelBuque;
+import reportes.ReporteVisitable;
+import reportes.ReporteVisitor;
 
-public class Buque {
+public class Buque  implements ReporteVisitable{
 	
 	public String nombreBuque;
 	
@@ -42,7 +44,6 @@ public class Buque {
 	this.estado = estadoNuevo;
 	}
 	
-
 	
 	public String getNombre() {
 		return nombreBuque;
@@ -59,7 +60,13 @@ public class Buque {
 	public Double getGps() {
 		return gps;
 	}
-
+	
+	public void accept(ReporteVisitor visitor) {
+        visitor.visit(this);
+        for (Container c : cargas) {
+            c.accept(visitor); 
+        }
+	}
 	
 }
 

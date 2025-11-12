@@ -1,32 +1,25 @@
 package reportes;
 
-import empresaMaritima.TerminalGestionada;
-import empresaMaritima.Orden;
+import containers.Container;
+import empresaMaritima.Buque;
 
 public class ReporteAduanaVisitor implements ReporteVisitor {
 
-    private StringBuilder html = new StringBuilder();
-
     @Override
-    public void visitarTerminal(TerminalGestionada terminal) {
-        html.append("<html><body>");
-        html.append("<h1>Reporte Aduana</h1>");
-
-        for (Orden o : terminal.getOrdenes()) {
-            html.append("<h2>Buque: ").append(o.getViaje().getBuque().getNombre()).append("</h2>")
-                .append("<p>Arribo: ").append(o.getViaje().getArribo()).append("<br>")
-                .append("Partida: ").append(o.getViaje().getPartida()).append("</p>")
-                .append("<ul>");
-            o.getViaje().getContenedores().forEach(c ->
-                html.append("<li>").append(c.getTipo()).append(" - ").append(c.getIDContainer()).append("</li>")
-            );
-            html.append("</ul>");
+    public void visit(Buque buque) {
+        System.out.println("<html><body>");
+        System.out.println("<h1>Reporte Aduana</h1>");
+        System.out.println("<p>Buque: " + buque.getNombre() + "</p>");
+        System.out.println("<ul>");
+        for (Container c : buque.getCargas()) {
+            c.accept(this);
         }
-
-        html.append("</body></html>");
+        System.out.println("</ul>");
+        System.out.println("</body></html>");
     }
 
-    public String getHtml() {
-        return html.toString();
+    @Override
+    public void visit(Container container) {
+        System.out.println("<li>" + container.getTipo() + " - " + container.getIDContainer() + "</li>");
     }
 }

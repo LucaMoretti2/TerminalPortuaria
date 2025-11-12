@@ -23,8 +23,8 @@ class NavieraTestCase {
     @BeforeEach
     void setUp() {
         naviera = new Naviera("Titanic");
-        naviera.flota = new HashSet<>();
-        naviera.circuitos = new HashSet<>();
+        naviera.setFlota(new HashSet<>());
+        naviera.setCircuitos(new HashSet<>());
 
         buqueMock = new Buque("Titanic", 10.5, null);
         circuitoMock = new CircuitoMaritimo("Circuito Pacifico");
@@ -39,15 +39,15 @@ class NavieraTestCase {
     void testAgregarBuque() {
         naviera.addBuque(buqueMock);
 
-        assertTrue(naviera.flota.contains(buqueMock));
-        assertEquals(1, naviera.flota.size());
+        assertTrue(naviera.getFlota().contains(buqueMock));
+        assertEquals(1, naviera.getFlota().size());
     }
 
     @Test
     void testAgregarCircuito() {
         naviera.addCircuito(circuitoMock);
 
-        assertTrue(naviera.circuitos.contains(circuitoMock));
-        assertEquals(1, naviera.circuitos.size());
+        assertTrue(naviera.getCircuitos().contains(circuitoMock));
+        assertEquals(1, naviera.getCircuitos().size());
     }
 }

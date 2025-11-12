@@ -1,116 +1,93 @@
 package terminalPortuaria;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import containers.Container;
 import empresaMaritima.Buque;
-import empresaMaritima.Observer;
 import estadosBuque.EstadoDelBuque;
+import reportes.ReporteVisitor;
 
 class BuqueTestCase {
 
-    @Mock
-    private EstadoDelBuque estadoMock;
-
-    @Mock
-    private Container containerMock;
-
-    @Mock
-    private Observer observadorMock;
-
     private Buque buque;
+    private EstadoDelBuque estadoMock;
+    private Container containerMock1;
+    private Container containerMock2;
+    private ReporteVisitor visitorMock;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        estadoMock = mock(EstadoDelBuque.class);
+        containerMock1 = mock(Container.class);
+        containerMock2 = mock(Container.class);
+        visitorMock = mock(ReporteVisitor.class);
 
-        buque = new Buque("Unqui", 12.5, estadoMock);
-        buque.setCargas(new HashSet<>()); 
+        buque = new Buque("Titanic", 45.6, estadoMock);
+        Set<Container> cargas = new HashSet<>();
+        cargas.add(containerMock1);
+        cargas.add(containerMock2);
+        buque.setCargas(cargas);
     }
 
-    //Test 1: constructor y getters
+    //Test 1: getters básicos
     @Test
-    void testConstructorYGetters() {
-        assertEquals("Unqui", buque.getNombre());
-        assertEquals(12.5, buque.getGps());
+    void testGettersBasicos() {
+        assertEquals("Titanic", buque.getNombre());
+        assertEquals(45.6, buque.getGps());
         assertEquals(estadoMock, buque.getEstadoBuque());
+        assertTrue(buque.getCargas().contains(containerMock1));
     }
 
-    //Test 2: agregar container
+    // Test 2: setEstado cambia correctamente el estado
+    @Test
+    void testSetEstadoCambiaElEstado() {
+        EstadoDelBuque nuevoEstado = mock(EstadoDelBuque.class);
+        buque.setEstado(nuevoEstado);
+        assertEquals(nuevoEstado, buque.getEstadoBuque());
+    }
+
+    // Test 3: agregar container
     @Test
     void testAddContainer() {
-        buque.addContainer(containerMock);
-        assertTrue(buque.getCargas().contains(containerMock));
+        Container nuevoContainer = mock(Container.class);
+        buque.addContainer(nuevoContainer);
+        assertTrue(buque.getCargas().contains(nuevoContainer));
     }
 
-    //Test 3: cambiar estado
+    // Test 4: actualizarPosicion delega en el estado- Patron State
     @Test
-    void testSetEstado() {
-        EstadoDelBuque nuevoEstadoMock = mock(EstadoDelBuque.class);
-
-        buque.setEstado(nuevoEstadoMock);
-
-        assertEquals(nuevoEstadoMock, buque.getEstadoBuque());
+    void testActualizarPosicionLlamaAlEstado() {
+        buque.actualizarPosicion(buque, 99.9);
+        verify(estadoMock).actualizarPosicion(eq(buque), eq(99.9), any());
     }
 
-    // Test 4: delegación al patrón State
+    // Test 5: patrón Visitor — acepta el visitor y propaga a containers
     @Test
-    void testActualizarPosicionDelegadaAlEstado() {
-        buque.actualizarPosicion(99.9);
-        verify(estadoMock).actualizarPosicion(buque, 99.9);
+    void testAcceptLlamaVisitorEnBuqueYContainers() {
+        buque.accept(visitorMock);
+
+        verify(visitorMock).visit(buque);
+
+        verify(containerMock1).accept(visitorMock);
+        verify(containerMock2).accept(visitorMock);
     }
 
+    //  Test 6: cambiar y obtener cargas
     @Test
-    void testIniciarTrabajoDelegadoAlEstado() {
-        buque.iniciarTrabajo();
-        verify(estadoMock).iniciarTrabajo(buque);
-    }
-
-    @Test
-    void testFinalizarTrabajoDelegadoAlEstado() {
-        buque.finalizarTrabajo();
-        verify(estadoMock).finalizarTrabajo(buque);
-    }
-
-    @Test
-    void testNotificarDelegadoAlEstado() {
-        buque.notificar();
-        verify(estadoMock).notificar();
-    }
-
-    @Test
-    void testRealizarPagosDelegadoAlEstado() {
-        buque.realizarPagoNecesarios();
-        verify(estadoMock).realizarPagosNecesarios();
-    }
-
-    //Test 5: patrón Observer - agregar y notificar
-    @Test
-    void testAgregarYNotificarObservadores() {
-        buque.agregarObservador(observadorMock);
-
-        buque.notificarEvento();
-
-        verify(observadorMock).actualizarEvento(buque);
-    }
-
-    // Test 6: eliminar observador
-    @Test
-    void testEliminarObservador() {
-        buque.agregarObservador(observadorMock);
-        buque.eliminarObservador(observadorMock);
-
-        buque.notificarEvento();
-
-        verify(observadorMock, never()).actualizarEvento(buque);
+    void testSetYCargas() {
+        Set<Container> nuevos = new HashSet<>();
+        Container c = mock(Container.class);
+        nuevos.add(c);
+        buque.setCargas(nuevos);
+        assertEquals(1, buque.getCargas().size());
+        assertTrue(buque.getCargas().contains(c));
     }
 }

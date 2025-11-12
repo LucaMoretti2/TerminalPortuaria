@@ -4,9 +4,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import reportes.ReporteVisitable;
+import reportes.ReporteVisitor;
 import serviciosDeContainer.Servicio;
 
-public abstract class Container {
+public abstract class Container implements ReporteVisitable {
 
 	int alto;
 	int ancho;
@@ -75,6 +77,10 @@ public abstract class Container {
     
     public String getTipo() {
     	return tipo;
+    }
+    @Override
+    public void accept(ReporteVisitor visitor) {
+        visitor.visit(this);
     }
 
 	

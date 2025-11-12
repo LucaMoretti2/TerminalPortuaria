@@ -1,7 +1,10 @@
 package reportes;
 
-import empresaMaritima.TerminalGestionada;
+import containers.Container;
+import empresaMaritima.Buque;
+
 
 public interface ReporteVisitor {
-    void visitarTerminal(TerminalGestionada terminal);
+    void visit(Buque buque);
+    void visit(Container container);
 }

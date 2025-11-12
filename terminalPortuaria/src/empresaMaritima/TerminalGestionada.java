@@ -8,7 +8,7 @@ import buscador.BuscadorDeTrayectosStrategy;
 import containers.Container;
 import reportes.ReporteVisitor;
 
-public class TerminalGestionada implements reportes.ReporteVisitable {
+public class TerminalGestionada{
 	
 
 	double posicion;
@@ -91,10 +91,7 @@ public class TerminalGestionada implements reportes.ReporteVisitable {
 	    }
 	}
 
-	@Override
-	public void accept(ReporteVisitor visitor) {
-	    visitor.visitarTerminal(this);
-	}
+	
 	
 	public void inicioTrabajo() {
 		System.out.println("Iniciando trabajos de carga/descarga...");
