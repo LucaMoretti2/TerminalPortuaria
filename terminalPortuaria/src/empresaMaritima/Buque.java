@@ -10,9 +10,9 @@ public class Buque {
 	
 	public String nombreBuque;
 	
-	Double gps;
+	private Double gps;
 	
-	Set<Container> cargas;
+	private Set<Container> cargas;
 	
 	EstadoDelBuque estado;		// El estado con el que se encuentra al momento es 'Outbound'
 	
@@ -25,9 +25,9 @@ public class Buque {
 		this.gps = gps;
 	}
 	
-	public void addContainer(Container container) {cargas.add(container);}
+	public void addContainer(Container container) {getCargas().add(container);}
 	
-	public void gps(Double nuevalocalizacion) {this.gps= nuevalocalizacion;}
+	public void gps(Double nuevalocalizacion) {this.gps(nuevalocalizacion);}
 	
 	public EstadoDelBuque getEstadoBuque() { return this.estado;}
 	
@@ -64,5 +64,19 @@ public class Buque {
 	public String getNombre() {
 		return nombreBuque;
 	}
+
+	public Set<Container> getCargas() {
+		return cargas;
+	}
+
+	public void setCargas(Set<Container> cargas) {
+		this.cargas = cargas;
+	}
+
+	public Double getGps() {
+		return gps;
+	}
+
+	
 }
 

@@ -5,23 +5,32 @@ import java.util.List;
 
 public class EmpresaTransportista {
 
-    String nombreEmpresa;
-    List<Camion> camiones = new ArrayList<>();
-    List<Chofer> empleados = new ArrayList<>();
+    private String nombreEmpresa;
+    private List<Camion> camiones = new ArrayList<>();
+    private List<Chofer> empleados = new ArrayList<>();
 
-    public EmpresaTransportista(String nombreEmpresa){
+    public EmpresaTransportista(String nombreEmpresa) {
         this.nombreEmpresa = nombreEmpresa;
     }
 
-   public void addCamion(Camion camion){
-         camiones.add(camion);
-   }
+    public void addCamion(Camion camion) {
+        camiones.add(camion);
+    }
 
-   public void removeCamion(Camion camion){
+    public void removeCamion(Camion camion) {
         camiones.remove(camion);
-   }
+    }
 
-//se podria hacer algo de recibir carga, evaluar
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
 
+    public List<Camion> getCamiones() {
+        return camiones;
+    }
+
+    public List<Chofer> getEmpleados() {
+        return empleados;
+    }
+    
 }
-

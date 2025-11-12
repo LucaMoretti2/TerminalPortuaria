@@ -67,7 +67,7 @@ public class Viaje {
 	}
 	
 	public Set<Container> getContenedores(){
-		return buque.cargas;
+		return buque.getCargas();
 	}
 	
 	

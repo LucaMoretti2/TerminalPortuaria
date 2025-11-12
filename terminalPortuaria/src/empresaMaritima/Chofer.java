@@ -12,6 +12,10 @@ public class Chofer {
         return nombre;
     }
 
+   public Camion getCamionAsignado(){
+       return camionAsignado;
+   }
+
     public void asignarCamion(Camion camion) { 
         this.camionAsignado = camion; 
     }

@@ -12,14 +12,14 @@ public abstract class Orden {
 	int id;
 	Container container;
 	Viaje viaje;
-	LocalDateTime fechaDeRegistro;
+	private LocalDateTime fechaDeRegistro;
 	List<Servicio> servicios = new ArrayList<>();
 	double costoTotal;
 	
 	public Orden(Container container, Viaje viaje) {
 		this.container = container;
 		this.viaje = viaje;
-		this.fechaDeRegistro = LocalDateTime.now();
+		this.fechaDeRegistro= LocalDateTime.now();
 		this.servicios = new ArrayList<>();
 	}
 	
@@ -46,5 +46,11 @@ public abstract class Orden {
 	public abstract double calcularCostoTotal();
 	
 	public abstract String getResposablePago();
+
+	public LocalDateTime getFechaDeRegistro() {
+		return fechaDeRegistro;
+	}
+
+
 	
 }
