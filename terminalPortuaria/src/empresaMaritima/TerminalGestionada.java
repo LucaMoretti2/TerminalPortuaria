@@ -52,9 +52,13 @@ public class TerminalGestionada implements reportes.ReporteVisitable {
 		choferes.add(chofer);
 	}
 		
-	public CircuitoMaritimo buscarRuta(TerminalGestionada terminal) {
-		return this.motorDeBusqueda.buscar(terminal);
-	}
+	public List<CircuitoMaritimo> buscarRuta(TerminalGestionada terminal, LocalDateTime fechaLimite) {
+        return this.motorDeBusqueda.buscar(terminal, fechaLimite);
+    }
+
+    public void setBuscador(BuscadorDeTrayectosStrategy buscador) {
+        this.motorDeBusqueda = buscador;
+    }
 	
 	public void registrarOrdenDeExportacion(Shipper shipper, Container container, Viaje viaje, Camion camion, Chofer chofer, LocalDateTime turno) {
 		OrdenDeExportacion orden = new OrdenDeExportacion(container, viaje, shipper, camion, chofer, turno);

@@ -1,12 +1,14 @@
 package empresaMaritima;
 
-	import java.util.ArrayList;
+	import java.time.LocalDateTime;
+import java.util.ArrayList;
 	import java.util.List;
 
 	public class CircuitoMaritimo {
 		    
 		private String nombre;
 		private List<Tramo> tramos =new ArrayList<>();
+		private LocalDateTime fechaInicio;
 
 		
 		    public CircuitoMaritimo(String nombre) {
@@ -56,6 +58,19 @@ package empresaMaritima;
 		        }
 				return totalHoras;
 		    }
+		    public boolean contieneTerminal(TerminalGestionada terminal) {
+                for (Tramo tramo : tramos) {
+                    if (tramo.getTerminalDestino().equals(terminal)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            
+            public LocalDateTime getFechaDeInicio() {
+                return fechaInicio;
+            }
 	}
 
 
