@@ -75,7 +75,7 @@ public class TerminalGestionada implements reportes.ReporteVisitable {
 		return ordenes;
 	}
 	
-	private void notificarConsignees(String mensaje) {
+	public void notificarConsignees(String mensaje) {
 	    for (ActorPortuario actor : actores) {
 	        if (actor instanceof Consignee) {
 	            actor.notificar(mensaje);
@@ -83,7 +83,7 @@ public class TerminalGestionada implements reportes.ReporteVisitable {
 	    }
 	}
 
-	private void notificarShippers(String mensaje) {
+	public void notificarShippers(String mensaje) {
 	    for (ActorPortuario actor : actores ) {
 	        if (actor instanceof Shipper) {
 	            actor.notificar(mensaje);
@@ -92,7 +92,15 @@ public class TerminalGestionada implements reportes.ReporteVisitable {
 	}
 
 	@Override
-	public void accept(reportes.ReporteVisitor visitor) {
+	public void accept(ReporteVisitor visitor) {
 	    visitor.visitarTerminal(this);
+	}
+	
+	public void inicioTrabajo() {
+		System.out.println("Iniciando trabajos de carga/descarga...");
+	}
+	
+	public void ordenDeparting() { 
+		System.out.println("Los trabajos de carga/descarga han finalizado.");
 	}
 }

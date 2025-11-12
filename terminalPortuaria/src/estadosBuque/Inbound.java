@@ -1,6 +1,7 @@
 package estadosBuque;
 
 import empresaMaritima.Buque;
+import empresaMaritima.TerminalGestionada;
 
 public class Inbound implements EstadoDelBuque{
 
@@ -8,32 +9,34 @@ public class Inbound implements EstadoDelBuque{
 	public String nombreEstado() {return "Inbound";}
 
 	@Override
-	public void actualizarPosicion(Buque buque, Double gps) {
+	public void actualizarPosicion(Buque buque, Double gps, TerminalGestionada terminal) {
 		
 		if (gps == 0.0) {
-			buque.setEstado(new Arrived());
 			System.out.println("El buque" + buque.nombreBuque + "llegó a terminal");
-			System.out.println("Cambiando el estado a Inbound...");
+			System.out.println("Cambiando el estado a Arrived...");
+			terminal.notificarConsignees("El buque llego a destino");
+			buque.setEstado(new Arrived());
 		}
 		
 	}
 	
-	@Override
-	public void iniciarTrabajo(Buque buque) {}
 
 	@Override
-	public void finalizarTrabajo(Buque buque) {}
-
-	//Se envia email a los consignees por el arribo del buque
-	@Override
-	public void notificar() {
+	public void informarExportacion(Buque buque) {
+		System.out.println("No es posible informar exportaciones en el estado actual <INTBOUND>");
 		
 	}
 
 	@Override
-	public void realizarPagosNecesarios() {
-		System.out.println("Los pagos por servicios no se pueden operar en la fase actual <INBOUND>");
+	public void informarImportacion(Buque buque) {
+		System.out.println("Informe de importacion enviado exitosamente");
 		
 	}
 
+	@Override
+	public void realizarPagos(Buque buque) {
+		System.out.println("No se pueden realizar pago en la fase actual <INBOUND>");}
+	
 }
+
+

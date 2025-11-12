@@ -16,7 +16,9 @@ public class Buque {
 	
 	EstadoDelBuque estado;		// El estado con el que se encuentra al momento es 'Outbound'
 	
-	List<Observer> observadores = new ArrayList<>();
+	TerminalGestionada terminalDestino;
+	
+	TerminalGestionada terminalOrigen;
 	
 	public Buque(String nombre, Double gps, EstadoDelBuque estado) {
 		
@@ -27,7 +29,10 @@ public class Buque {
 	
 	public void addContainer(Container container) {getCargas().add(container);}
 	
-	public void gps(Double nuevalocalizacion) {this.gps(nuevalocalizacion);}
+	public void actualizarPosicion(Buque buque, Double gps) {
+		this.gps = gps;
+		estado.actualizarPosicion(this, gps, terminalDestino);
+	}
 	
 	public EstadoDelBuque getEstadoBuque() { return this.estado;}
 	
@@ -37,29 +42,7 @@ public class Buque {
 	this.estado = estadoNuevo;
 	}
 	
-	//Patron State
-	
-	public void actualizarPosicion(Double gps) { estado.actualizarPosicion(this,gps);}
-	
-	public void iniciarTrabajo() { estado.iniciarTrabajo(this);}
-	
-	public void finalizarTrabajo() {estado.finalizarTrabajo(this);}
-	
-	public void notificar() { estado.notificar();}
-	
-	public void realizarPagoNecesarios() { estado.realizarPagosNecesarios();}
-	
-	
-	//Patron Observer
-	
-	public void agregarObservador(Observer obs) { observadores.add(obs);}
-	
-	public void eliminarObservador(Observer obs) { observadores.remove(obs);}
-	
-	public void notificarEvento() {
-		for (Observer obs : observadores) { obs.actualizarEvento(this);} //posiblemente necesite de mas parametros
-	
-	}
+
 	
 	public String getNombre() {
 		return nombreBuque;
