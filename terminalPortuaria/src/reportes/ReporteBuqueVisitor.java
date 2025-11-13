@@ -2,6 +2,10 @@ package reportes;
 
 import containers.Container;
 import empresaMaritima.Buque;
+//Buque. Este documento sirve para confirmar que los registros del buque
+//coincidan con los de la terminal. En este documento, se listan los
+//identificadores de los contenedores descargados y los identificadores de los
+//contenedores cargados.
 
 public class ReporteBuqueVisitor implements ReporteVisitor {
 

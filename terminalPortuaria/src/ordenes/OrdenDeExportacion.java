@@ -9,6 +9,17 @@ import empresaMaritima.Camion;
 import empresaMaritima.Chofer;
 import empresaMaritima.Viaje;
 
+/*
+ Representa una orden de exportación de un container dentro de la terminal.
+ Extiende la clase abstracta Orden e incorpora información específica de la operatoria de exportación:
+  - Shipper (quien contrata y paga la operación)
+ - Camión y Chofer que ingresan el container a la terminal
+ - Turno asignado para el ingreso
+Implementa los métodos abstractos de Orden:
+ - calcularCostoTotal(): el costo final es la suma de los servicios aplicados
+- getResponsablePago(): el responsable del pago es el shipper
+
+ */
 public class OrdenDeExportacion extends Orden {
 
 	private Shipper shipper;

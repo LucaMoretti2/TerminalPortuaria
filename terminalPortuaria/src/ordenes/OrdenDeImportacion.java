@@ -10,8 +10,20 @@ import empresaMaritima.Camion;
 import empresaMaritima.Chofer;
 import empresaMaritima.Viaje;
 
+/*
+ Representa una orden de importación de un container dentro de la terminal.
+Extiende la clase abstracta Orden e incorpora información específica del proceso de importación:
+- Consignee (responsable de retirar y pagar)
+- Camión y Chofer que retiran el container
+- Fecha de llegada de la carga y fecha de retiro
+- Cálculo de días excedentes de almacenamiento en la terminal
+Implementa los métodos abstractos de Orden:
+ - registrarRetiro(): registra el retiro y calcula los días excedentes
+ - calcularCostoTotal(): suma el costo de servicios, el costo por excedentes y el costo del viaje
+- getResponsablePago(): el pago corresponde al consignee
+
+ */
 public class OrdenDeImportacion extends Orden {
-	
 	Consignee consignee;
 	private Camion camion;
 	private Chofer chofer;

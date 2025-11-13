@@ -7,7 +7,26 @@ import java.util.List;
 import reportes.ReporteVisitable;
 import reportes.ReporteVisitor;
 import serviciosDeContainer.Servicio;
+/*
+ 
+Clase abstracta que modela un container dentro de la operatoria de la terminal.
+Contiene la información común a todos los tipos de contenedores:
+- Dimensiones (alto, ancho, largo)
+- Peso total
+- Identificador estándar (4 letras + 7 números)
+- Fechas de ingreso y retiro de la terminal
+- Servicios aplicados al container (Lavado, Almacenamiento, etc.)
+ Provee comportamientos generales:
+- registrarRetiro(): establece la fecha de retiro
+- addServicio(): agrega un servicio aplicado al container
+- costoTotalDeServicios(): calcula el costo acumulado de los servicios
 
+Implementa la interfaz ReporteVisitable para integrarse con el patrón Visitor,
+permitiendo que distintos tipos de reportes procesen la información del container
+sin modificar la clase.
+
+Las subclases deben definir detalles propios (tipo de container).
+ */
 public abstract class Container implements ReporteVisitable {
 
 	int alto;

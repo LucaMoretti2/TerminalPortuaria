@@ -1,7 +1,16 @@
 package containers;
 
 import java.time.LocalDateTime;
+/*
+Representa un contenedor Tanque, utilizado para transportar líquidos
+ Extiende la clase abstracta Container e incorpora datos específicos:
+ - tipoDeLiquido: sustancia transportada en el tanque
+ - capacidadDeLitros: volumen máximo del contenedor
+- Bill of Lading asociado a la carga líquida
 
+Funcionalidades adicionales:
+- revisarDiaria(): simula la inspección obligatoria del tanque en una fecha determinada.
+ */
 public class Tanque extends Container {
 
 	String tipoDeLiquido;

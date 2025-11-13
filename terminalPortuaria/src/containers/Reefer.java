@@ -2,7 +2,19 @@ package containers;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-
+/*
+ Representa un contenedor Reefer 
+ Extiende la clase abstracta Container e incorpora información específicav del uso eléctrico:
+ 
+- consumoPorHora: consumo energético del reefer por hora de conexión
+- inicioDeConexion / finConexion: período durante el cual estuvo conectado
+- getHorasConectado(): calcula la cantidad total de horas de uso eléctrico 
+ Además, mantiene un Bill of Lading asociado, ya que los reefers suelen
+ transportar un único tipo de carga sensible a temperatura.
+ 
+ Define su tipo como "Reefer" y utiliza Duration para calcular tiempos
+ de conexión de manera precisa.
+ */
 public class Reefer extends Container {
 
 	double consumoPorHora;

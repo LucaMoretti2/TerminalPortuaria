@@ -2,6 +2,8 @@ package reportes;
 
 import containers.Container;
 import empresaMaritima.Buque;
+//Solo indica nombre del buque , fecha de arribo y partida, y lista de
+//contenedores (indicando tipo y ID). Este documento deberá ser en HTML.
 
 public class ReporteAduanaVisitor implements ReporteVisitor {
 

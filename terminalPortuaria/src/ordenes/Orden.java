@@ -9,6 +9,17 @@ import empresaMaritima.Buque;
 import empresaMaritima.Viaje;
 import serviciosDeContainer.Servicio;
 
+/*
+ Clase abstracta que representa una Orden dentro de la operatoria de la terminal.
+ 
+ Cada orden está asociada a un container, un viaje y un buque, y registra una
+  fecha de creación. Además, puede tener múltiples servicios adicionales que contribuyen al costo final.
+  
+ La clase provee el comportamiento común: Registrar la fecha de creación,Agregar servicios y Calcular el costo acumulado de los servicios
+ 
+ Las subclases deben implementar:calcularCostoTotal getResponsablePago 
+ 
+ */
 public abstract class Orden {
 
 	int id;
