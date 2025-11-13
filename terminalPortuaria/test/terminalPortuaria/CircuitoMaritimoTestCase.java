@@ -4,10 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import buscador.BuscadorPorFechaDeLlegada;
 import empresaMaritima.CircuitoMaritimo;
 import empresaMaritima.TerminalGestionada;
 import empresaMaritima.Tramo;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +20,7 @@ class CircuitoMaritimoTestCase {
     private Tramo tramo1;
     private Tramo tramo2;
     private Tramo tramo3;
+    private LocalDateTime llegada;
     private TerminalGestionada destinoMock;
 
     @BeforeEach
@@ -25,8 +29,10 @@ class CircuitoMaritimoTestCase {
         tramo1 = new Tramo(1000.0, new Date(2L * 60 * 60 * 1000), "Buenos Aires", "Brasil"); 
         tramo2 = new Tramo(2000.0, new Date(3L * 60 * 60 * 1000), "Brasil", "Paraguay");       
         tramo3 = new Tramo(1500.0, new Date(1L * 60 * 60 * 1000), "Paraguay", "Peru");   
-
-        destinoMock = new TerminalGestionada(5.0);
+        llegada = LocalDateTime.of(2025, 11, 1, 8, 0);
+        List<CircuitoMaritimo> lista = new ArrayList<>();
+        lista.add(circuito);
+        destinoMock = new TerminalGestionada(5.0,"Retiro",new BuscadorPorFechaDeLlegada(lista,llegada));
     }
     //Test 1: nombre y lista inicial
     @Test
@@ -77,9 +83,11 @@ class CircuitoMaritimoTestCase {
         circuito.agregarTramo(tramo1);
         circuito.agregarTramo(tramo2);
         circuito.agregarTramo(tramo3);
+        List<CircuitoMaritimo> lista = new ArrayList<>();
+        lista.add(circuito);
 
 
-        TerminalGestionada destino = new TerminalGestionada(0);
+        TerminalGestionada destino = new TerminalGestionada(0, "Retiro",new BuscadorPorFechaDeLlegada(lista,llegada));
         long horasHastaDestino = circuito.calcularDuracionHasta(destino);
 
         assertTrue(horasHastaDestino >= 0);

@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import containers.Container;
+import empresaMaritima.Buque;
 import empresaMaritima.Orden;
 import empresaMaritima.Viaje;
 import serviciosDeContainer.Servicio;
@@ -23,6 +24,10 @@ class OrdenTestCase {
 
     @Mock
     private Viaje viajeMock;
+    
+    @Mock
+    private Buque buqueMock;
+
 
     @Mock
     private Servicio servicio1;
@@ -36,7 +41,7 @@ class OrdenTestCase {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        orden = new Orden(containerMock, viajeMock) {
+        orden = new Orden(containerMock, viajeMock,buqueMock) {
             @Override
             public double calcularCostoTotal() {
                 return calcularCostoServicios();

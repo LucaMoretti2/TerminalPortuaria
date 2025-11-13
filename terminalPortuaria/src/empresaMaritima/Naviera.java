@@ -32,6 +32,14 @@ public class Naviera {
 		this.flota = flota;
 	}
 	
+	public long tiempoDeRecorrido(TerminalGestionada origen, TerminalGestionada destino) {
+        for (CircuitoMaritimo circuito : circuitos) {
+            if (circuito.contieneTerminal(origen) && circuito.contieneTerminal(destino)) {
+                return circuito.calcularDuracionHasta(destino);
+            }
+        }
+        return -1; 
+    }
 
 	
 }

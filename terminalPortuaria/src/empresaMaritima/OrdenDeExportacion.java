@@ -6,18 +6,19 @@ import containers.Container;
 
 public class OrdenDeExportacion extends Orden {
 
-	Shipper shipper;
-	Camion camion;
-	Chofer chofer;
-	LocalDateTime turnoAsignado;
+	private Shipper shipper;
+	private Camion camion;
+	private Chofer chofer;
+	private LocalDateTime turnoAsignado;
 	
-	public OrdenDeExportacion(Container container, Viaje viaje, Shipper shipper, Camion camion, Chofer chofer, LocalDateTime turnoAsignado) {
-		super(container, viaje);
+	public OrdenDeExportacion(Container container, Viaje viaje,Buque buque, Shipper shipper, Camion camion, Chofer chofer, LocalDateTime turnoAsignado) {
+		super(container, viaje,buque);
 		// TODO Auto-generated constructor stub
 		this.shipper = shipper;
 		this.camion = camion;
 		this.chofer = chofer;
 		this.turnoAsignado = turnoAsignado;
+		this.buque = buque;
 	}
 
 	
@@ -31,7 +32,47 @@ public class OrdenDeExportacion extends Orden {
 	@Override
 	public String getResposablePago() {
 		// TODO Auto-generated method stub
-		return shipper.getNombre();
+		return getShipper().getNombre();
+	}
+
+
+	public Shipper getShipper() {
+		return shipper;
+	}
+
+
+	public void setShipper(Shipper shipper) {
+		this.shipper = shipper;
+	}
+
+
+	public Camion getCamion() {
+		return camion;
+	}
+
+
+	public void setCamion(Camion camion) {
+		this.camion = camion;
+	}
+
+
+	public Chofer getChofer() {
+		return chofer;
+	}
+
+
+	public void setChofer(Chofer chofer) {
+		this.chofer = chofer;
+	}
+
+
+	public LocalDateTime getTurnoAsignado() {
+		return turnoAsignado;
+	}
+
+
+	public void setTurnoAsignado(LocalDateTime turnoAsignado) {
+		this.turnoAsignado = turnoAsignado;
 	}
 
 }

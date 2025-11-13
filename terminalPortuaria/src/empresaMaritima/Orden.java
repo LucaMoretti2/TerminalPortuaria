@@ -15,12 +15,14 @@ public abstract class Orden {
 	private LocalDateTime fechaDeRegistro;
 	List<Servicio> servicios = new ArrayList<>();
 	double costoTotal;
+	Buque buque;
 	
-	public Orden(Container container, Viaje viaje) {
+	public Orden(Container container, Viaje viaje,Buque buque) {
 		this.container = container;
 		this.viaje = viaje;
 		this.fechaDeRegistro= LocalDateTime.now();
 		this.servicios = new ArrayList<>();
+		this.buque = buque;
 	}
 	
 	public void agregarServicio(Servicio servicio) {
@@ -49,6 +51,16 @@ public abstract class Orden {
 
 	public LocalDateTime getFechaDeRegistro() {
 		return fechaDeRegistro;
+	}
+
+	public Buque getBuque() {
+		// TODO Auto-generated method stub
+		return buque;
+	}
+
+	public List<Servicio> getServicios() {
+		// TODO Auto-generated method stub
+		return servicios;
 	}
 
 

@@ -1,5 +1,6 @@
 package empresaMaritima;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +8,13 @@ import java.util.List;
 import buscador.BuscadorDeTrayectosStrategy;
 import containers.Container;
 import reportes.ReporteVisitor;
+import serviciosDeContainer.Servicio;
 
 public class TerminalGestionada{
 	
 
 	double posicion;
+	String nombre;
 	BuscadorDeTrayectosStrategy motorDeBusqueda;
 	List<Naviera> navieras = new ArrayList<>();
 	List<CircuitoMaritimo> circuitos = new ArrayList<>();
@@ -20,9 +23,12 @@ public class TerminalGestionada{
 	List<Camion> camiones = new ArrayList<>();
 	List<Chofer> choferes = new ArrayList<>();
 	List<Orden> ordenes = new ArrayList<>();
+	List<Viaje> viajesProgramados = new ArrayList<>();
 		
-	public TerminalGestionada(double posicion) {
+	public TerminalGestionada(double posicion,String nombre,BuscadorDeTrayectosStrategy motorDeBusqueda) {
 		this.posicion = posicion;
+		this.nombre = nombre;
+		this.motorDeBusqueda = motorDeBusqueda;
 	}
 		
 	public void registrarNaviera(Naviera naviera) {
@@ -30,7 +36,9 @@ public class TerminalGestionada{
 	}
 		
 	public void registrarCircuitoMaritimo(CircuitoMaritimo circuito) {
-		circuitos.add(circuito);
+		if (!circuitos.contains(circuito)) {
+	        circuitos.add(circuito);
+	    }
 	}
 		
 	public void registrarActorPortuario(ActorPortuario actor) {
@@ -60,13 +68,13 @@ public class TerminalGestionada{
         this.motorDeBusqueda = buscador;
     }
 	
-	public void registrarOrdenDeExportacion(Shipper shipper, Container container, Viaje viaje, Camion camion, Chofer chofer, LocalDateTime turno) {
-		OrdenDeExportacion orden = new OrdenDeExportacion(container, viaje, shipper, camion, chofer, turno);
+	public void registrarOrdenDeExportacion(Shipper shipper, Container container, Viaje viaje, Buque buque,Camion camion, Chofer chofer, LocalDateTime turno) {
+		OrdenDeExportacion orden = new OrdenDeExportacion(container, viaje,buque, shipper, camion, chofer, turno);
 		ordenes.add(orden);
 	}
 	
-	public void registrarOrdenDeImportacion(Consignee consignee, Container container, Viaje viaje, LocalDateTime llegada) {
-		OrdenDeImportacion orden = new OrdenDeImportacion(container, viaje, consignee, llegada);
+	public void registrarOrdenDeImportacion(Consignee consignee, Container container, Viaje viaje,Buque buque, LocalDateTime llegada) {
+		OrdenDeImportacion orden = new OrdenDeImportacion(container, viaje,buque, consignee, llegada);
 		ordenes.add(orden);
 		
 	}
@@ -91,7 +99,56 @@ public class TerminalGestionada{
 	    }
 	}
 
+	public void generarFacturas(Buque buque) {
+	    for (Orden orden : ordenes) {
+	        if (orden.getBuque().equals(buque)) {
+
+	            ActorPortuario responsable;
+
+	            if (orden instanceof OrdenDeExportacion) {
+	                OrdenDeExportacion ordenExport = (OrdenDeExportacion) orden;
+	                responsable = ordenExport.getShipper();
+	            } else if (orden instanceof OrdenDeImportacion) {
+	                OrdenDeImportacion ordenImport = (OrdenDeImportacion) orden;
+	                responsable = ordenImport.getConsignee();
+	            } else {
+	            	continue;
+	            }
+
+	            List<Servicio> servicios = orden.getServicios();
+	            Factura factura = new Factura(LocalDate.now(), responsable, servicios,orden.getContainer());
+
+	            factura.enviarPorMail();
+
+	            if (orden instanceof OrdenDeImportacion) {
+	                OrdenDeImportacion ordenImport = (OrdenDeImportacion) orden;
+	                double costoViaje = ordenImport.getViaje().calcularCostoViaje();
+	                System.out.println("Costo adicional de viaje: $" + costoViaje);
+	            }
+	        }
+	    }
+	}
 	
+	public long tiempoDeRecorrido(Naviera naviera, TerminalGestionada destino) {
+	    return naviera.tiempoDeRecorrido(this, destino);
+	}
+	
+	public LocalDateTime proximaFechaDePartida(TerminalGestionada destino) {
+	    LocalDateTime proxima = null;
+	    
+
+	    for (Viaje viaje : viajesProgramados) {
+	        CircuitoMaritimo circuito = viaje.getCircuito();
+
+	        if (circuito.contieneTerminal(destino)) {
+	            if (proxima == null || viaje.getPartida().isBefore(proxima)) {
+	                proxima = viaje.getPartida();
+	            }
+	        }
+	    }
+
+	    return proxima;
+	}
 	
 	public void inicioTrabajo() {
 		System.out.println("Iniciando trabajos de carga/descarga...");
