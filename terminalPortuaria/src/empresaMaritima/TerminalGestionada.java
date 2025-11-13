@@ -90,6 +90,14 @@ public class TerminalGestionada{
 		return ordenes;
 	}
 	
+	public List<Viaje> getViajesProgramados(){
+		return viajesProgramados;
+	}
+	
+	public List<CircuitoMaritimo> getCircuitos(){
+		return circuitos;
+	}
+	
 	public void notificarConsignees(String mensaje, Buque buque) {
 		for (Orden orden : ordenes) {
 	        if (orden instanceof OrdenDeImportacion && orden.getBuque().equals(buque)) {
@@ -176,4 +184,6 @@ public class TerminalGestionada{
 	public CircuitoMaritimo obtenerMejorCircuito(TerminalGestionada destino) {
 	    return criterioSeleccion.seleccionarMejorCircuito(circuitos, destino);
 	}
+	
+	
 }
