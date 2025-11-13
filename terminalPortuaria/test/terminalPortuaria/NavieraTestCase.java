@@ -13,13 +13,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
-
+//No delega comportamientos ni contiene lógica compleja, por lo que los tests utilizan objetos reales en lugar de mocks
 class NavieraTestCase {
 
     private Naviera naviera;
     private Buque buqueMock;
     private CircuitoMaritimo circuitoMock;
-//Falta arreglar aca
+
     @BeforeEach
     void setUp() {
         naviera = new Naviera("Titanic");
@@ -29,12 +29,12 @@ class NavieraTestCase {
         buqueMock = new Buque("Titanic", 10.5, null);
         circuitoMock = new CircuitoMaritimo("Circuito Pacifico");
     }
-
+//el nombre de la naviera se inicializa correctamente
     @Test
     void testConstructorYNombre() {
         assertEquals("Titanic", naviera.nombre);
     }
-
+//los buques se agregan correctamente a la flota
     @Test
     void testAgregarBuque() {
         naviera.addBuque(buqueMock);
@@ -42,7 +42,7 @@ class NavieraTestCase {
         assertTrue(naviera.getFlota().contains(buqueMock));
         assertEquals(1, naviera.getFlota().size());
     }
-
+//los circuitos se agregan correctamente
     @Test
     void testAgregarCircuito() {
         naviera.addCircuito(circuitoMock);

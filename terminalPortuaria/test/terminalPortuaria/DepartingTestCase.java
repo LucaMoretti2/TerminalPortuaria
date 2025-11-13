@@ -22,7 +22,7 @@ class DepartingTestCase {
 		buqueSpy = spy(new Buque("Libertad",60.0,departing));
 	}
 	
-	
+//Testeo que al cambiar de poscion cambia el estado de Buque
 	@Test
 	void actualizarPosisionYCambiarEstadoDeBuque() {
 		

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import actores.Consignee;
-
+//Representa al importador
 class ConsigneeTestCase {
 
     private Consignee consignee;

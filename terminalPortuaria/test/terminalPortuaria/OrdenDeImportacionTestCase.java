@@ -18,7 +18,8 @@ import empresaMaritima.Chofer;
 import empresaMaritima.Viaje;
 import ordenes.OrdenDeImportacion;
 import serviciosDeContainer.Servicio;
-
+//Esta clase depende de Container, Viaje, Shipper, Camion, Chofer y una lista de Servicios. 
+//Se utiliza mocks para aislar completamente esta unidad lógica.
 class OrdenDeImportacionTestCase {
 
     @Mock
@@ -68,7 +69,7 @@ class OrdenDeImportacionTestCase {
         assertEquals(llegada, orden.getFechaLlegadaCarga());
     }
 
-  
+  //verifica que se asignen orrectamente el camión, chofer y fecha de retiro.
     @Test
     void testRegistrarRetiro() {
         orden.registrarRetiro(camionMock, choferMock, retiro20h);
@@ -78,7 +79,6 @@ class OrdenDeImportacionTestCase {
         assertEquals(retiro20h, orden.getFechaRetiro());
     }
 
-   
     @Test
     void testDiasExcedentesCero() {
         orden.registrarRetiro(camionMock, choferMock, retiro20h);
@@ -97,10 +97,10 @@ class OrdenDeImportacionTestCase {
         assertEquals(2, orden.getDiasExcedentes());
     }
 
- 
+//El cálculo del costo total de la orden 
     @Test
     void testCalcularCostoTotal() {
-        // 48 horas → 1 día excedente → 1000
+
         orden.registrarRetiro(camionMock, choferMock, retiro48h);
 
         Servicio s1 = mock(Servicio.class);
@@ -116,12 +116,9 @@ class OrdenDeImportacionTestCase {
 
         double total = orden.calcularCostoTotal();
 
-        // servicios: 2000 + 3000 = 5000
-        // excedentes: 1 * 1000 = 1000
-        // viaje: 5000
         assertEquals(11000.0, total);
     }
-
+   //La obtención del responsable de pago
     @Test
     void testGetResponsablePago() {
         when(consigneeMock.getNombre()).thenReturn("Importadora S.A.");

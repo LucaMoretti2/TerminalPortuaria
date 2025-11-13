@@ -37,7 +37,7 @@ class BuqueTestCase {
         buque.setCargas(cargas);
     }
 
-    //Test 1: getters básicos
+    //Test 1: getters básicos :verifica que el buque devuelva correctamente nombre,gps,estado actual,cargas
     @Test
     void testGettersBasicos() {
         assertEquals("Titanic", buque.getNombre());
@@ -54,7 +54,7 @@ class BuqueTestCase {
         assertEquals(nuevoEstado, buque.getEstadoBuque());
     }
 
-    // Test 3: agregar container
+    // Test 3: agregar container al set de cargas
     @Test
     void testAddContainer() {
         Container nuevoContainer = mock(Container.class);

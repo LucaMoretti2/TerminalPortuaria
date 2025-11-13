@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+//No se utilizan mocks: todos los métodos operan sobre datos
+// propios y no requieren verificar interacciones con colaboradores.
 class CircuitoMaritimoTestCase {
 
     private CircuitoMaritimo circuito;

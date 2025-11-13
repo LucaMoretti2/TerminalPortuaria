@@ -16,7 +16,8 @@ import estadosBuque.EstadoDelBuque;
 import reportes.ReporteAduanaVisitor;
 import reportes.ReporteBuqueVisitor;
 import reportes.ReporteMuelleVisitor;
-
+//Como los reportes imprimen su salida directamente por consola, el test redirige temporalmente System.out 
+//hacia un ByteArrayOutputStream para capturar y analizar el texto producido por cada visitor.
 class ReporteTestCase {
 
     @Test
@@ -45,7 +46,7 @@ class ReporteTestCase {
         cargas.add(c2);
         buque.setCargas(cargas);
 
-
+// genera correctamente la estructura XML
         ReporteBuqueVisitor reporteBuque = new ReporteBuqueVisitor();
         reporteBuque.visit(buque);
 
@@ -58,7 +59,7 @@ class ReporteTestCase {
 
         salida.reset(); 
 
-     
+    //produce un documento HTML 
         ReporteAduanaVisitor reporteAduana = new ReporteAduanaVisitor();
         reporteAduana.visit(buque); 
 
@@ -70,7 +71,7 @@ class ReporteTestCase {
         assertTrue(outAduana.contains("</body></html>"));
 
         salida.reset();
-
+//muestra en texto plano
         ReporteMuelleVisitor reporteMuelle = new ReporteMuelleVisitor();
         reporteMuelle.visit(buque);
 

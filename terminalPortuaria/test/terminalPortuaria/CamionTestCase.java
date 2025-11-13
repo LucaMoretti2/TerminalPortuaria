@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import empresaMaritima.Camion;
 import empresaMaritima.Chofer;
 import empresaMaritima.EmpresaTransportista;
+//se utilizan objetos reales porque la clase Camion únicamente almacena
+//datos y no delega comportamientos ni implementa logica compleja.
 
 class CamionTestCase {
 
@@ -23,7 +25,7 @@ class CamionTestCase {
         camion = new Camion("CamionBSA", choferMock,empresaMock);
  
     }
-
+//identificador del camión se inicializa correctamente
     @Test
     void testGetIdCamion() {
         assertEquals("CamionBSA", camion.getIdCamion());
@@ -33,6 +35,7 @@ class CamionTestCase {
     void testGetEmpresa() {
         assertEquals(empresaMock, camion.getEmpresa());
     }
+   //el chofer pasado en el constructor queda correctamente vinculado como chofer asignado al camión. 
 
     @Test
     void testChoferAsociado() {

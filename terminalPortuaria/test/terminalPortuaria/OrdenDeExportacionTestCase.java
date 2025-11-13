@@ -18,7 +18,8 @@ import empresaMaritima.Chofer;
 import empresaMaritima.Viaje;
 import ordenes.OrdenDeExportacion;
 import serviciosDeContainer.Servicio;
-
+// Esta clase depende de Container, Viaje, Shipper, Camion, Chofer y una lista de Servicios. 
+//Se utiliza mocks para aislar completamente esta unidad lógica.
 class OrdenDeExportacionTestCase {
 
     @Mock

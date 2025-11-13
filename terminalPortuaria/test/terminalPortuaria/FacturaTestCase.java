@@ -15,13 +15,14 @@ import actores.ActorPortuario;
 import containers.Container;
 import empresaMaritima.Factura;
 import serviciosDeContainer.Servicio;
-
+//se usan mocks para los servicios y el container:
 class FacturaTestCase {
 
 	@BeforeEach
 	void setUp() throws Exception {
 	}
 
+//Factura sume correctamente los costos individuales de cada servicio.
 	@Test
 	void testCalcularTotalFactura() {
 	    
@@ -38,8 +39,9 @@ class FacturaTestCase {
 	    Factura factura = new Factura(LocalDate.now(), responsable, servicios, container);
 
 	    assertEquals(300.0, factura.getTotal());
-	}	
+	}
 	
+//si la lista de servicios está vacía, el total calculado sea 0.
 	@Test
 	void testFacturaSinServiciosTieneTotalCero() {
 	    ActorPortuario responsable = mock(ActorPortuario.class);

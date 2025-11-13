@@ -27,7 +27,7 @@ class ContainerTestCase {
         ingreso = LocalDateTime.of(2025, 1, 1, 10, 0);
         retiro = LocalDateTime.of(2025, 1, 2, 10, 0);
 	}
-
+//Test 1: Agregar BLs y calcular el peso total de los Bill of Lading
 	@Test
 	void testAgregarBillOfLadingYCalcularPesoTotal() {
 	    Dry dry = new Dry(2, 3, 6, 5000, "1234", ingreso, retiro);
@@ -45,6 +45,7 @@ class ContainerTestCase {
 	    assertFalse(dry.esDesconsolidado());
 	}
 	
+//Test 2: Cálculo de horas conectado en reefer	
 	@Test
 	void testReeferCalculoDeHorasConectado() {
 	    Reefer reefer = new Reefer(2, 3, 6, 8000, "1234", 10.5, ingreso, retiro);
@@ -55,7 +56,7 @@ class ContainerTestCase {
 	    assertEquals(12, reefer.getHorasConectado());
 	    assertEquals(10.5, reefer.getConsumoPorHora());
 	}
-	
+// Test 3: Verificación de atributos propios del contenedor Tanque
 	@Test
 	void testTanqueAtributosYRevision() {
 	    Tanque tanque = new Tanque(2, 3, 6, 10000, "1234", ingreso, retiro, "Combustible", 2500);
@@ -64,6 +65,7 @@ class ContainerTestCase {
 	    assertEquals(2500, tanque.getCapacidadDeLitros());
 	}
 	
+// Test 4: Cálculo del costo total de servicios aplicados al contenedor
 	@Test
 	void testCostoTotalDeServicios() {
 	    Dry container = new Dry(2, 3, 6, 5000, "1234", ingreso, retiro);

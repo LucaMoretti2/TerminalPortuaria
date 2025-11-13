@@ -1,5 +1,5 @@
 package actores;
-
+//Representa al exportador
 public class Shipper implements ActorPortuario {
 
     String nombre;

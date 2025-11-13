@@ -1,4 +1,5 @@
 package actores;
+//Representa al importador 
 
 public class Consignee implements ActorPortuario {
 
