@@ -1,50 +1,46 @@
 package terminalPortuaria;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import empresaMaritima.Buque;
+import empresaMaritima.TerminalGestionada;
+import estadosBuque.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
 
-import buscador.BuscadorPorFechaDeLlegada;
-import empresaMaritima.Buque;
-import empresaMaritima.CircuitoMaritimo;
-import empresaMaritima.TerminalGestionada;
-import estadosBuque.Outbound;
+class OutboundTestCase{
 
-class OutboundTestCase {
+    private Outbound outbound;
+    private TerminalGestionada terminalMock;
+    private Buque buquespy;
 
-	    private Buque buqueMock;
-	    private CircuitoMaritimo circuito;
-	    private TerminalGestionada terminalMock;
-	    private Outbound outbound;
-	    private LocalDateTime llegada;
+    @BeforeEach
+    void setUp() {
+        outbound = new Outbound();
+        terminalMock = mock(TerminalGestionada.class);
+       
+       buquespy = spy(new Buque("Santa Sofia", 30.0, outbound));
+    }
 
-	    @BeforeEach
-	    void setUp() {
-	        buqueMock = new Buque("Santa Sofia",75.6, outbound);
-	        circuito = new CircuitoMaritimo("Ruta Sur");
-	        List<CircuitoMaritimo> lista = new ArrayList<>();
-	        lista.add(circuito);
-	        llegada = LocalDateTime.of(2025, 11, 1, 8, 0);
-	        terminalMock = new TerminalGestionada(0, "Retiro",new BuscadorPorFechaDeLlegada(lista,llegada));
-	        outbound = new Outbound();
-	    }
+    @Test
+    void testGpsEnCeroYCambioDeFase() {
 
-	    @Test
-	    void testGpsEnCeroYCambioDeFase() {
-	        //Actualizo la posicion del gps 
-	        outbound.actualizarPosicion(buqueMock, 30.0, terminalMock);
-	        //Verifico el cambio de fase...
-	        assertEquals("Inbound",buqueMock.getEstadoBuque());
+        // Actualizo la posicion del buque a Cero
+        outbound.actualizarPosicion(buquespy, 0.0, terminalMock);
+        // Verifico que se realicen las tareas de fase y que cambie de estado despues de hacer las tareas.
+        verify(terminalMock).notificarConsignees("El buque esta pronto al arrivo");
+        verify(buquespy).setEstado(any(Inbound.class));
+    }
 
-	    }
+    @Test
+    void testGpsMayorA50NoCambiaEstado() {
+    	// Actualizo la posicion a una localizacion alejada de la terminal 
+        outbound.actualizarPosicion(buquespy, 100.0, terminalMock);
+        // Verifico que no se lleven a cabo las tareas ya que no se cumple la condicion de cambio de estado. 
+        verifyNoInteractions(terminalMock);
+        // El comando never() verifica que no se producen llamadas al metodo de la clase correspondiente <nunca se invocó el mock>
+        // El any hace que se acepte cualquier valor de un tipo especifico, no requiere argumentos de valores exactos. <cualquier cosa le viene bien>
+        verify(buquespy, never()).setEstado(any(Inbound.class));
+    }
+}
 
-	    @Test
-	    void testGetNombreEstado() {
-	        assertEquals("Outbound",outbound.nombreEstado());
-	    }
-	}

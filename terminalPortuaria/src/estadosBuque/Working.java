@@ -11,7 +11,7 @@ public class Working implements EstadoDelBuque {
 	@Override
 	public void actualizarPosicion(Buque buque, Double gps, TerminalGestionada terminal) {
 		terminal.ordenDeparting();
-		buque.setEstado(new Depating());
+		buque.setEstado(new Departing());
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package estadosBuque;
 import empresaMaritima.Buque;
 import empresaMaritima.TerminalGestionada;
 
-public class Depating implements EstadoDelBuque {
+public class Departing implements EstadoDelBuque {
 
 	@Override
 	public String nombreEstado() { return "Departing";}
