@@ -1,6 +1,7 @@
 package empresaMaritima;
 
 import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +16,26 @@ import ordenes.Orden;
 import ordenes.OrdenDeExportacion;
 import ordenes.OrdenDeImportacion;
 import serviciosDeContainer.Servicio;
-//Representa una Terminal Portuaria gestionada, encargada de coordinar toda la operatoria logistica entre buques, 
-//contenedores, navieras, actores portuarios  y empresas transportistas.
+
+/**
+ * Representa una terminal portuaria gestionada, encargada de coordinar navieras,
+ * circuitos marítimos, órdenes de exportación e importación, y otros actores del puerto.
+ * 
+ * Cada terminal puede buscar rutas hacia otras, registrar actores o camiones,
+ * generar facturas, y notificar a los responsables según el buque asociado.
+ */
+
 public class TerminalGestionada{
 
-
+	//Simplificada la posicion para el dominio actual
 	double posicion;
 	String nombre;
-	BuscadorDeTrayectosStrategy motorDeBusqueda; //permite buscar rutas hacia otras terminales  en base a diferentes criterios.
-	BuscadorMejorCircuitoStrategy criterioSeleccion; // selecciona el mejor circuito entre varios candidatos según políticas configurables.
+	//Estrategia que define cómo se buscan los trayectos marítimos hacia otras terminales <PUERTOS>
+	BuscadorDeTrayectosStrategy motorDeBusqueda; 
+	// Estrategia que define el mejor circuito entre varios posibles.
+	BuscadorMejorCircuitoStrategy criterioSeleccion; 
+	
+	//Lista de entidades registradas en la terminal.
 	List<Naviera> navieras = new ArrayList<>();
 	List<CircuitoMaritimo> circuitos = new ArrayList<>();
 	List<ActorPortuario> actores = new ArrayList<>();
@@ -32,18 +44,23 @@ public class TerminalGestionada{
 	List<Chofer> choferes = new ArrayList<>();
 	List<Orden> ordenes = new ArrayList<>();
 	List<Viaje> viajesProgramados = new ArrayList<>();
-		
+	
+	
+	
 	public TerminalGestionada(double posicion,String nombre,BuscadorDeTrayectosStrategy motorDeBusqueda) {
 		this.posicion = posicion;
 		this.nombre = nombre;
 		this.motorDeBusqueda = motorDeBusqueda;
 	}
 		
+	
+	//Métodos de registro de entidades --------------------------------------
 	public void registrarNaviera(Naviera naviera) {
 		navieras.add(naviera);
 	}
 		
 	public void registrarCircuitoMaritimo(CircuitoMaritimo circuito) {
+		//Evita registrar el circuito más de una vez.
 		if (!circuitos.contains(circuito)) {
 	        circuitos.add(circuito);
 	    }
@@ -67,7 +84,16 @@ public class TerminalGestionada{
 	public void registrarChofer(Chofer chofer) {
 		choferes.add(chofer);
 	}
-		
+	//-----------------------------------------------------------------------
+	
+	
+	/*
+	 * Busca una ruta hacia otra terminal utilizando el motor de búsqueda
+	 * @param terminal destino a buscar.
+	 * @param fechaLimite fecha máxima de llegada.
+	 * @param lista de posible circuitos.
+	 */
+	
 	public List<CircuitoMaritimo> buscarRuta(TerminalGestionada terminal, LocalDateTime fechaLimite) {
         return this.motorDeBusqueda.buscar(terminal, fechaLimite);
     }
@@ -76,6 +102,8 @@ public class TerminalGestionada{
         this.motorDeBusqueda = buscador;
     }
 	
+    //Órdenes ---------------------------------------------------------------------------------------------------------------------------
+    
 	public void registrarOrdenDeExportacion(Shipper shipper, Container container, Viaje viaje, Buque buque,Camion camion, Chofer chofer, LocalDateTime turno) {
 		OrdenDeExportacion orden = new OrdenDeExportacion(container, viaje,buque, shipper, camion, chofer, turno);
 		ordenes.add(orden);
@@ -86,6 +114,8 @@ public class TerminalGestionada{
 		ordenes.add(orden);
 		
 	}
+	
+	//Getters útiles----------------------------------------
 	
 	public List<Orden> getOrdenes(){
 		return ordenes;
@@ -98,6 +128,10 @@ public class TerminalGestionada{
 	public List<CircuitoMaritimo> getCircuitos(){
 		return circuitos;
 	}
+	
+	//--------------------------------------------------------------------
+	
+	//Notificaciones de importador/exportador ---------------------------------------
 	
 	public void notificarConsignees(String mensaje, Buque buque) {
 		for (Orden orden : ordenes) {
@@ -118,13 +152,18 @@ public class TerminalGestionada{
 	        }
 	    }
 	}
-
+	/*
+	 * Generacion de facturas para TODAS las órdenes asociadas al buque dado.
+	 * Imprime también costos adicionales si la orden es de importacion.
+	 * */
+	
 	public void generarFacturas(Buque buque) {
 	    for (Orden orden : ordenes) {
 	        if (orden.getBuque().equals(buque)) {
 
 	            ActorPortuario responsable;
-
+	            
+	            //Determina quien paga: shipper o consignee
 	            if (orden instanceof OrdenDeExportacion) {
 	                OrdenDeExportacion ordenExport = (OrdenDeExportacion) orden;
 	                responsable = ordenExport.getShipper();
@@ -134,12 +173,14 @@ public class TerminalGestionada{
 	            } else {
 	            	continue;
 	            }
-
+	            
+	            //Se genera la factura con los servicios utilizados
 	            List<Servicio> servicios = orden.getServicios();
 	            Factura factura = new Factura(LocalDate.now(), responsable, servicios,orden.getContainer());
 
 	            factura.enviarPorMail();
-
+	            
+	            //En órdenes de importacion se mmuestra el costo del viaje.
 	            if (orden instanceof OrdenDeImportacion) {
 	                OrdenDeImportacion ordenImport = (OrdenDeImportacion) orden;
 	                double costoViaje = ordenImport.getViaje().calcularCostoViaje();
@@ -169,7 +210,9 @@ public class TerminalGestionada{
 
 	    return proxima;
 	}
+	//----------------------------------------------------------------------------
 	
+	//Tanto inicioTrabajo() como ordenDeparting() simulan los trabajos correspondientes:
 	public void inicioTrabajo() {
 		System.out.println("Iniciando trabajos de carga/descarga...");
 	}
