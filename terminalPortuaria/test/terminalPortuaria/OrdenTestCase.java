@@ -13,8 +13,8 @@ import org.mockito.MockitoAnnotations;
 
 import containers.Container;
 import empresaMaritima.Buque;
-import empresaMaritima.Orden;
 import empresaMaritima.Viaje;
+import ordenes.Orden;
 import serviciosDeContainer.Servicio;
 
 class OrdenTestCase {

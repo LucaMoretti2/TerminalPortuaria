@@ -1,4 +1,4 @@
-package empresaMaritima;
+package actores;
 
 public class Shipper implements ActorPortuario {
 

@@ -5,9 +5,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import actores.ActorPortuario;
+import actores.Consignee;
+import actores.Shipper;
 import buscador.BuscadorDeTrayectosStrategy;
 import containers.Container;
-import reportes.ReporteVisitor;
+import mejorCircuito.BuscadorMejorCircuitoStrategy;
+import ordenes.Orden;
+import ordenes.OrdenDeExportacion;
+import ordenes.OrdenDeImportacion;
 import serviciosDeContainer.Servicio;
 
 public class TerminalGestionada{
@@ -16,6 +22,7 @@ public class TerminalGestionada{
 	double posicion;
 	String nombre;
 	BuscadorDeTrayectosStrategy motorDeBusqueda;
+	BuscadorMejorCircuitoStrategy criterioSeleccion;
 	List<Naviera> navieras = new ArrayList<>();
 	List<CircuitoMaritimo> circuitos = new ArrayList<>();
 	List<ActorPortuario> actores = new ArrayList<>();
@@ -83,18 +90,22 @@ public class TerminalGestionada{
 		return ordenes;
 	}
 	
-	public void notificarConsignees(String mensaje) {
-	    for (ActorPortuario actor : actores) {
-	        if (actor instanceof Consignee) {
-	            actor.notificar(mensaje);
+	public void notificarConsignees(String mensaje, Buque buque) {
+		for (Orden orden : ordenes) {
+	        if (orden instanceof OrdenDeImportacion && orden.getBuque().equals(buque)) {
+	            OrdenDeImportacion ordenImportacion = (OrdenDeImportacion) orden;
+	            Consignee consignee = ordenImportacion.getConsignee();
+	            consignee.notificar(mensaje);
 	        }
 	    }
 	}
 
-	public void notificarShippers(String mensaje) {
-	    for (ActorPortuario actor : actores ) {
-	        if (actor instanceof Shipper) {
-	            actor.notificar(mensaje);
+	public void notificarShippers(String mensaje, Buque buque) {
+		for (Orden orden : ordenes) {
+	        if (orden instanceof OrdenDeExportacion && orden.getBuque().equals(buque)) {
+	            OrdenDeExportacion ordenExportacion = (OrdenDeExportacion) orden;
+	            Shipper shipper = ordenExportacion.getShipper();
+	            shipper.notificar(mensaje);
 	        }
 	    }
 	}
@@ -156,5 +167,13 @@ public class TerminalGestionada{
 	
 	public void ordenDeparting() { 
 		System.out.println("Los trabajos de carga/descarga han finalizado.");
+	}
+	
+	public void setCriterioSeleccion(BuscadorMejorCircuitoStrategy criterio) {
+	    this.criterioSeleccion = criterio;
+	}
+	
+	public CircuitoMaritimo obtenerMejorCircuito(TerminalGestionada destino) {
+	    return criterioSeleccion.seleccionarMejorCircuito(circuitos, destino);
 	}
 }

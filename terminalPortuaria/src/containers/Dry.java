@@ -26,7 +26,7 @@ public class Dry extends Container {
 	public double getPesoTotalDeBLs() {
 		double pesoHastaAhora = 0;
 		for (BillOfLading bl: bls) {
-			pesoHastaAhora += bl.peso;
+			pesoHastaAhora += bl.getPeso();
 		}
 		return pesoHastaAhora;
 	}

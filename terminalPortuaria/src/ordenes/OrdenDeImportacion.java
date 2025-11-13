@@ -1,9 +1,14 @@
-package empresaMaritima;
+package ordenes;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import actores.Consignee;
 import containers.Container;
+import empresaMaritima.Buque;
+import empresaMaritima.Camion;
+import empresaMaritima.Chofer;
+import empresaMaritima.Viaje;
 
 public class OrdenDeImportacion extends Orden {
 	
@@ -51,7 +56,7 @@ public class OrdenDeImportacion extends Orden {
 		return consignee.getNombre();
 	}
 
-	public ActorPortuario getConsignee() {
+	public Consignee getConsignee() {
 		// TODO Auto-generated method stub
 		return consignee;
 	}

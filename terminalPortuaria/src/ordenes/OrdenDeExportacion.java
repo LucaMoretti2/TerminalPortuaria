@@ -1,8 +1,13 @@
-package empresaMaritima;
+package ordenes;
 
 import java.time.LocalDateTime;
 
+import actores.Shipper;
 import containers.Container;
+import empresaMaritima.Buque;
+import empresaMaritima.Camion;
+import empresaMaritima.Chofer;
+import empresaMaritima.Viaje;
 
 public class OrdenDeExportacion extends Orden {
 

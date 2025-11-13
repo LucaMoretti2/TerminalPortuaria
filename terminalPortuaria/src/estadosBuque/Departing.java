@@ -12,8 +12,10 @@ public class Departing implements EstadoDelBuque {
 	public void actualizarPosicion(Buque buque, Double gps, TerminalGestionada terminal) {
 		if (gps >= 50.0) {
 			System.out.println("El buque" + buque.getNombre() + "se encuentra saliendo de la terminal");
+			System.out.println("Generando facturas de servicios y viajes");
+	        terminal.generarFacturas(buque);
 			System.out.println("Cambiando a Outbound...");
-			terminal.notificarShippers("El buque" + buque.getNombre() + "esta saliendo de la terminal");
+			terminal.notificarShippers("El buque" + buque.getNombre() + "esta saliendo de la terminal", buque);
 			buque.setEstado(new Outbound());
 			}
 

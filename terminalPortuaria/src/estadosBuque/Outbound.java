@@ -12,7 +12,7 @@ public class Outbound implements EstadoDelBuque{
 		if (gps <= 50.0) {
 			System.out.println("El buque" + buque.getNombre() + "se encuentra cercano a terminal");
 			System.out.println("Cambiando a Inbound...");
-			terminal.notificarConsignees("El buque esta pronto al arrivo");
+			terminal.notificarConsignees("El buque esta pronto al arrivo", buque);
 			buque.setEstado(new Inbound());
 			}
 	}

@@ -1,6 +1,6 @@
 package containers;
 
-import empresaMaritima.Consignee;
+import actores.Consignee;
 
 public class BillOfLading {
 	

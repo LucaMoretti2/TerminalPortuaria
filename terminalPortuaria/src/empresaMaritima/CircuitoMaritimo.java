@@ -1,7 +1,7 @@
 package empresaMaritima;
 
 	import java.time.LocalDateTime;
-import java.util.ArrayList;
+	import java.util.ArrayList;
 	import java.util.List;
 
 	public class CircuitoMaritimo {
@@ -11,66 +11,90 @@ import java.util.ArrayList;
 		private LocalDateTime fechaInicio;
 
 		
-		    public CircuitoMaritimo(String nombre) {
-		        this.nombre = nombre;
-		        this.tramos = new ArrayList<>();
-		    }
+		public CircuitoMaritimo(String nombre) {
+		    this.nombre = nombre;
+		    this.tramos = new ArrayList<>();
+		}
 
 		   
-		    public String getNombre() {
-		        return nombre;
-		    }
+		public String getNombre() {
+			return nombre;
+		}
 
-		    public List<Tramo> getTramos() {
-		        return tramos;
-		    }
-
-
-		    public void agregarTramo(Tramo tramo) {
-		        tramos.add(tramo);
-		    }
+		public List<Tramo> getTramos() {
+			return tramos;
+		}
 
 
-		    public long calcularTiempoTotalHoras() {
-		        long total = 0;
-		        for (Tramo tramo : tramos) {
-		            total += tramo.getDuracionEnHoras();
-		        }
-		        return total;
-		    }
+		public void agregarTramo(Tramo tramo) {
+			tramos.add(tramo);
+		}
 
 
-		    public double calcularPrecioTotal() {
-		        double total = 0;
-		        for (Tramo tramo : tramos) {
-		            total += tramo.getPrecio();
-		        }
-		        return total;
-		    }
+		public long calcularTiempoTotalHoras() {
+			long total = 0;
+			for (Tramo tramo : tramos) {
+				total += tramo.getDuracionEnHoras();
+			}
+			return total;
+		}
+
+
+		public double calcularPrecioTotal() {
+			double total = 0;
+			for (Tramo tramo : tramos) {
+				total += tramo.getPrecio();
+			}
+			return total;
+		}
 		    
-		    public long calcularDuracionHasta(TerminalGestionada destino) {
-		        long totalHoras = 0;
-		        for (Tramo tramo : tramos) {
-		            totalHoras += tramo.getDuracionEnHoras();
-		            if (tramo.getTerminalDestino().equals(destino)) {
-		                return totalHoras;
-		            }
-		        }
-				return totalHoras;
-		    }
-		    public boolean contieneTerminal(TerminalGestionada terminal) {
-                for (Tramo tramo : tramos) {
-                    if (tramo.getTerminalDestino().equals(terminal)) {
-                        return true;
-                    }
-                }
-                return false;
-            }
+		public long calcularDuracionHasta(TerminalGestionada destino) {
+			long totalHoras = 0;
+			for (Tramo tramo : tramos) {
+				totalHoras += tramo.getDuracionEnHoras();
+				if (tramo.getTerminalDestino().equals(destino)) {
+					return totalHoras;
+				}
+			}
+			return totalHoras;
+		}
+		
+		public boolean contieneTerminal(TerminalGestionada terminal) {
+			for (Tramo tramo : tramos) {
+				if (tramo.getTerminalDestino().equals(terminal)) {
+					return true;
+				}
+			}
+			return false;
+		}
 
             
-            public LocalDateTime getFechaDeInicio() {
-                return fechaInicio;
-            }
-	}
+		public LocalDateTime getFechaDeInicio() {
+			return fechaInicio;
+		}
+            
+		public double calcularPrecioHasta(TerminalGestionada destino) {
+			double total = 0;
+			for (Tramo tramo : tramos) {
+				total += tramo.getPrecio();
+				if (tramo.getTerminalDestino().equals(destino)) {
+					return total;
+				}
+			}
+			return total;
+		}
+		
+		public int cantidadDeTerminalesIntermedias(TerminalGestionada destino) {
+		    int cantidad = 0;
+		    for (Tramo tramo : tramos) {
+		        cantidad++;
+		        if (tramo.getTerminalDestino().equals(destino)) {
+		            break;
+		        }
+		    }
+		    if (cantidad > 0) cantidad--;
+		    return cantidad;
+		}
+}
 
 

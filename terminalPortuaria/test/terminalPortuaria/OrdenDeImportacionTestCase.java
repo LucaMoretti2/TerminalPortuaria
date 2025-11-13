@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import actores.Consignee;
 import containers.Container;
 import empresaMaritima.Buque;
 import empresaMaritima.Camion;
 import empresaMaritima.Chofer;
-import empresaMaritima.Consignee;
-import empresaMaritima.OrdenDeImportacion;
 import empresaMaritima.Viaje;
+import ordenes.OrdenDeImportacion;
 import serviciosDeContainer.Servicio;
 
 class OrdenDeImportacionTestCase {

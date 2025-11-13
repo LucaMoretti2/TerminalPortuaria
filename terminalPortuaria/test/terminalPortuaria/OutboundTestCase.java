@@ -28,7 +28,7 @@ class OutboundTestCase{
         // Actualizo la posicion del buque a Cero
         outbound.actualizarPosicion(buquespy, 0.0, terminalMock);
         // Verifico que se realicen las tareas de fase y que cambie de estado despues de hacer las tareas.
-        verify(terminalMock).notificarConsignees("El buque esta pronto al arrivo");
+        verify(terminalMock).notificarConsignees("El buque esta pronto al arrivo", eq(buquespy));
         verify(buquespy).setEstado(any(Inbound.class));
     }
 

@@ -1,10 +1,12 @@
-package empresaMaritima;
+package ordenes;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import containers.Container;
+import empresaMaritima.Buque;
+import empresaMaritima.Viaje;
 import serviciosDeContainer.Servicio;
 
 public abstract class Orden {

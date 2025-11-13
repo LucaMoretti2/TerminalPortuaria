@@ -1,26 +1,26 @@
 package empresaMaritima;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
+import actores.ActorPortuario;
 import containers.Container;
 import serviciosDeContainer.Servicio;
 
 public class Factura {
 	
-
-    private LocalDate fechaEmision;
-    private ActorPortuario responsable;
-    private List<Servicio> servicios;
-    private double total;
-    private Container container;
+    LocalDate fechaEmision;
+    ActorPortuario responsable;
+    List<Servicio> servicios;
+    double total;
+    Container container;
 
     public Factura(LocalDate fechaEmision, ActorPortuario responsable, List<Servicio> servicios, Container container) {
        
         this.fechaEmision = fechaEmision;
         this.responsable = responsable;
         this.servicios = servicios;
+        this.container = container;
         this.total = calcularTotal();
        
     }

@@ -28,7 +28,7 @@ class DepartingTestCase {
 		
 		departing.actualizarPosicion(buqueSpy, 60.0, terminalMock);
 		
-		verify(terminalMock).notificarShippers(contains("Libertad"));
+		verify(terminalMock).notificarShippers(contains("Libertad"), any());
 		verify(buqueSpy).setEstado(any(Outbound.class));
 		
 	}

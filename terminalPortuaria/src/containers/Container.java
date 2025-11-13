@@ -16,8 +16,8 @@ public abstract class Container implements ReporteVisitable {
 	double pesoTotal;
 	String idContainer; //4 letras 7 numeros
 	List<Servicio> servicios = new ArrayList<>();
-	LocalDateTime fechaDeIngreso; //a evaluar 
-	LocalDateTime fechaDeRetiro; //a evaluar 
+	LocalDateTime fechaDeIngreso; 
+	LocalDateTime fechaDeRetiro; 
 	String tipo;
 	
 	
