@@ -2,7 +2,8 @@ package empresaMaritima;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//Representa una empresa transportista dedicada al traslado terrestre de
+//contenedores hacia o desde la terminal portuaria.
 public class EmpresaTransportista {
 
     private String nombreEmpresa;

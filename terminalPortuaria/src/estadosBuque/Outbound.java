@@ -2,13 +2,14 @@ package estadosBuque;
 
 import empresaMaritima.Buque;
 import empresaMaritima.TerminalGestionada;
-
+// representa la fase en la cual el buque  se encuentra alejándose de la terminal portuaria
 public class Outbound implements EstadoDelBuque{
 
 	
 	@Override
 	public void actualizarPosicion(Buque buque, Double gps, TerminalGestionada terminal) {
-			
+	//Si la posición GPS indica que el buque está regresando a puerto   (gps <= 50.0), 
+		//se cambia al estado Inbound y se notifica a los consignees.
 		if (gps <= 50.0) {
 			System.out.println("El buque" + buque.getNombre() + "se encuentra cercano a terminal");
 			System.out.println("Cambiando a Inbound...");

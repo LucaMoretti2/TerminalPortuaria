@@ -1,7 +1,9 @@
 package empresaMaritima;
 
 public class Camion{
-
+//Representa un camión utilizado por una Empresa Transportista para realizar
+//operaciones de retiro o entrega de contenedores en la terminal.
+	
     String idCamion;
     EmpresaTransportista empresa;
     Chofer chofer;

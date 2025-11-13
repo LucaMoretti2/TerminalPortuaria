@@ -1,22 +1,17 @@
 package containers;
 
-/*
- Representa el Bill of Lading asociado a un container.
-Contiene la información esencial de la carga:
-- Tipo de producto transportado
-- Peso total de la carga
-- Consignee (importador) responsable de recibirla
- Este documento modela la información comercial vinculada al container y se
-utiliza para identificar el contenido y al destinatario de la mercancía.
- */
 import actores.Consignee;
 
 
 public class BillOfLading {
+//Contiene la información esencial de la carga:
 	
 	String tipoDeProducto;
 	double peso;
 	Consignee importador;
+
+//Información comercial vinculada al container y se
+//utiliza para identificar el contenido y al destinatario de la mercancía.
 	
 	public BillOfLading(String tipoDeProducto, double peso, Consignee importador) {
 		this.tipoDeProducto = tipoDeProducto;

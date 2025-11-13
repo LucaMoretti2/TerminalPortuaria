@@ -9,17 +9,9 @@ import empresaMaritima.Buque;
 import empresaMaritima.Viaje;
 import serviciosDeContainer.Servicio;
 
-/*
- Clase abstracta que representa una Orden dentro de la operatoria de la terminal.
- 
- Cada orden está asociada a un container, un viaje y un buque, y registra una
-  fecha de creación. Además, puede tener múltiples servicios adicionales que contribuyen al costo final.
+// Orden está asociada a un container, un viaje y un buque, y registra una
+ //fecha de creación. Además, puede tener múltiples servicios adicionales que contribuyen al costo final.
   
- La clase provee el comportamiento común: Registrar la fecha de creación,Agregar servicios y Calcular el costo acumulado de los servicios
- 
- Las subclases deben implementar:calcularCostoTotal getResponsablePago 
- 
- */
 public abstract class Orden {
 
 	int id;
@@ -37,11 +29,12 @@ public abstract class Orden {
 		this.servicios = new ArrayList<>();
 		this.buque = buque;
 	}
-	
+//agrega un servicio adicional a la orden
 	public void agregarServicio(Servicio servicio) {
 		servicios.add(servicio);
 	}
 
+//suma los costos de todos los servicios aplicados
 	public double calcularCostoServicios(){
 		double costoHastaAhora = 0;
 		for(Servicio s : servicios) {
@@ -57,9 +50,11 @@ public abstract class Orden {
 	public Container getContainer() {
 		return container;
 	}
-	
+// define el costo total para cada
+//tipo de orden (implementado en importación y exportación)
 	public abstract double calcularCostoTotal();
 	
+//método abstracto para saber quién debe pagar la orden
 	public abstract String getResposablePago();
 
 	public LocalDateTime getFechaDeRegistro() {

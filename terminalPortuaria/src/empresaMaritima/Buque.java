@@ -1,5 +1,7 @@
 package empresaMaritima;
 
+//Representa un buque portacontenedores dentro de la operatoria marítima.
+
 
 import java.util.*;
 
@@ -16,7 +18,7 @@ public class Buque  implements ReporteVisitable{
 	
 	private Set<Container> cargas;
 	
-	EstadoDelBuque estado;		// El estado con el que se encuentra al momento es 'Outbound'
+	EstadoDelBuque estado;		// El estado con el que se encuentra al momento es 'Outbound' e implementa el patrón State,
 	
 	TerminalGestionada terminalDestino;
 	
@@ -28,16 +30,16 @@ public class Buque  implements ReporteVisitable{
 		this.estado = estado;
 		this.gps = gps;
 	}
-	
+// agrega contenedores al buque
 	public void addContainer(Container container) {getCargas().add(container);}
-	
+//actualiza coordenadas y delega al estado la logica correspondiente (patrón State)
 	public void actualizarPosicion(Buque buque, Double gps) {
 		this.gps = gps;
 		estado.actualizarPosicion(this, gps, terminalDestino);
 	}
 	
 	public EstadoDelBuque getEstadoBuque() { return this.estado;}
-	
+// permite cambiar el estado operacional del buque
 	public void setEstado(EstadoDelBuque estadoNuevo) {
 	
 	System.out.println("Cambiando estado:" + estadoNuevo.nombreEstado());
@@ -60,7 +62,9 @@ public class Buque  implements ReporteVisitable{
 	public Double getGps() {
 		return gps;
 	}
-	
+//permite que un ReporteVisitor procese tanto el buque
+//como cada uno de los contenedores que transporta, facilitando la
+//generación de reportes sin acoplar la logica a la clase Buque.
 	public void accept(ReporteVisitor visitor) {
         visitor.visit(this);
         for (Container c : cargas) {

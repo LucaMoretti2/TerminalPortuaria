@@ -2,13 +2,15 @@ package estadosBuque;
 
 import empresaMaritima.Buque;
 import empresaMaritima.TerminalGestionada;
-
+//representa la fase en la cual el buque se encuentra aproximándose a la terminal
 public class Inbound implements EstadoDelBuque{
 
 	@Override
 	public String nombreEstado() {return "Inbound";}
 
 	@Override
+	//Cuando la posición GPS indica que el buque está en la terminal (gps == 0.0),
+// se notifica a los consignees su arribo y el buque cambia al estado Arrived.
 	public void actualizarPosicion(Buque buque, Double gps, TerminalGestionada terminal) {
 		
 		if (gps == 0.0) {

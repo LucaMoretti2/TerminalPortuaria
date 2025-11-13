@@ -10,19 +10,9 @@ import empresaMaritima.Camion;
 import empresaMaritima.Chofer;
 import empresaMaritima.Viaje;
 
-/*
- Representa una orden de importación de un container dentro de la terminal.
-Extiende la clase abstracta Orden e incorpora información específica del proceso de importación:
-- Consignee (responsable de retirar y pagar)
-- Camión y Chofer que retiran el container
-- Fecha de llegada de la carga y fecha de retiro
-- Cálculo de días excedentes de almacenamiento en la terminal
-Implementa los métodos abstractos de Orden:
- - registrarRetiro(): registra el retiro y calcula los días excedentes
- - calcularCostoTotal(): suma el costo de servicios, el costo por excedentes y el costo del viaje
-- getResponsablePago(): el pago corresponde al consignee
 
- */
+//Representa una orden de importación de un container dentro de la terminal.
+
 public class OrdenDeImportacion extends Orden {
 	Consignee consignee;
 	private Camion camion;
@@ -38,7 +28,7 @@ public class OrdenDeImportacion extends Orden {
 		this.setFechaLlegadaCarga(fechaLlegadaCarga);
 		this.buque = buque;
 	}
-	
+//registra el retiro y calcula los días excedentes
 	public void registrarRetiro(Camion camion, Chofer chofer, LocalDateTime fechaRetiro) {
 		this.setCamion(camion);
 		this.setChofer(chofer);
@@ -46,13 +36,14 @@ public class OrdenDeImportacion extends Orden {
 		this.setDiasExcedentes(calcularDiasExcedentes());
 	}
 	
+
 	private int calcularDiasExcedentes() {
 		long horas = Duration.between(getFechaLlegadaCarga(), getFechaRetiro()).toHours();
         return (horas > 24) ? (int) ((horas - 24) / 24) : 0;
     }
 	
 	
-
+//suma el costo de servicios, el costo por excedentes y el costo del viaje
 	@Override
 	public double calcularCostoTotal() {
 		// TODO Auto-generated method stub
@@ -61,6 +52,7 @@ public class OrdenDeImportacion extends Orden {
 		costoTotal = costoServicios + costoExcedente + viaje.calcularCostoViaje();
 		return costoTotal;
 	}
+//el pago corresponde al consignee	
 
 	@Override
 	public String getResposablePago() {

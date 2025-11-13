@@ -1,7 +1,10 @@
 package estadosBuque;
 
 import empresaMaritima.Buque;
+
 import empresaMaritima.TerminalGestionada;
+//representa la fase en la cual el buque está abandonando la terminal portuaria después de finalizar
+//las operaciones de carga y descarga. 
 
 public class Departing implements EstadoDelBuque {
 
@@ -9,6 +12,8 @@ public class Departing implements EstadoDelBuque {
 	public String nombreEstado() { return "Departing";}
 
 	@Override
+	//Una vez superado (gps >= 50.0), se generan las facturas se notifican
+	//a los shippers y el buque cambia al estado  Outbound.
 	public void actualizarPosicion(Buque buque, Double gps, TerminalGestionada terminal) {
 		if (gps >= 50.0) {
 			System.out.println("El buque" + buque.getNombre() + "se encuentra saliendo de la terminal");

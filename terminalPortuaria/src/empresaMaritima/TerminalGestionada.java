@@ -15,14 +15,15 @@ import ordenes.Orden;
 import ordenes.OrdenDeExportacion;
 import ordenes.OrdenDeImportacion;
 import serviciosDeContainer.Servicio;
-
+//Representa una Terminal Portuaria gestionada, encargada de coordinar toda la operatoria logistica entre buques, 
+//contenedores, navieras, actores portuarios  y empresas transportistas.
 public class TerminalGestionada{
-	
+
 
 	double posicion;
 	String nombre;
-	BuscadorDeTrayectosStrategy motorDeBusqueda;
-	BuscadorMejorCircuitoStrategy criterioSeleccion;
+	BuscadorDeTrayectosStrategy motorDeBusqueda; //permite buscar rutas hacia otras terminales  en base a diferentes criterios.
+	BuscadorMejorCircuitoStrategy criterioSeleccion; // selecciona el mejor circuito entre varios candidatos según políticas configurables.
 	List<Naviera> navieras = new ArrayList<>();
 	List<CircuitoMaritimo> circuitos = new ArrayList<>();
 	List<ActorPortuario> actores = new ArrayList<>();

@@ -12,7 +12,8 @@ public class Electricidad extends Servicio {
 		this.costoPorKW = costoPorKW;
 		// TODO Auto-generated constructor stub
 	}
-
+//este servicio calcula el costo basado 
+//en el tiempo de conexión y el consumo energetico del Reefer.
 	@Override
 	public double calcularCostoVariable(Container c) {
 		// TODO Auto-generated method stub

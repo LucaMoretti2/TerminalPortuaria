@@ -6,7 +6,9 @@ import java.util.List;
 import actores.ActorPortuario;
 import containers.Container;
 import serviciosDeContainer.Servicio;
-
+//Representa una factura emitida por la terminal portuaria por los servicios
+//prestados sobre un contenedor. Cada factura está asociada a un actor portuario responsable del pago
+//una lista de servicios realizados y el contenedor correspondiente.
 public class Factura {
 	
     LocalDate fechaEmision;
@@ -24,7 +26,7 @@ public class Factura {
         this.total = calcularTotal();
        
     }
-
+//suma los costos de cada servicio aplicado
     private double calcularTotal() {
         double totalAcumulado = 0;
         for (Servicio servicio : servicios) {
@@ -32,11 +34,11 @@ public class Factura {
         }
         return totalAcumulado;
     }
-
+// simula el envío de la factura al responsable
     public void enviarPorMail() {
         System.out.println("Enviando factura a " + responsable.getNombre() + " por $" + total);
     }
-
+//devuelve el monto total de la factura
     public double getTotal() {
         return total;
     }

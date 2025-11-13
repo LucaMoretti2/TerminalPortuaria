@@ -3,6 +3,7 @@ package estadosBuque;
 import empresaMaritima.Buque;
 import empresaMaritima.TerminalGestionada;
 
+// representa al buque cuando ya arribó a la terminal 
 public class Arrived implements EstadoDelBuque {
 
 	@Override

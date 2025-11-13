@@ -1,5 +1,6 @@
 package empresaMaritima;
-
+//Representa un Circuito Maritimo operado por una naviera. Un circuito es una 
+//secuencia unidireccional de tramos entre terminales portuarias, que los buques recorren de manera periodica.
 	import java.time.LocalDateTime;
 	import java.util.ArrayList;
 	import java.util.List;
@@ -25,12 +26,12 @@ package empresaMaritima;
 			return tramos;
 		}
 
-
+//incorpora un tramo al circuito
 		public void agregarTramo(Tramo tramo) {
 			tramos.add(tramo);
 		}
 
-
+//suma la duración de todos los tramos
 		public long calcularTiempoTotalHoras() {
 			long total = 0;
 			for (Tramo tramo : tramos) {
@@ -39,7 +40,7 @@ package empresaMaritima;
 			return total;
 		}
 
-
+//suma el precio de todos los tramos
 		public double calcularPrecioTotal() {
 			double total = 0;
 			for (Tramo tramo : tramos) {
@@ -47,7 +48,7 @@ package empresaMaritima;
 			}
 			return total;
 		}
-		    
+//calcula el tiempo necesario hasta alcanzar  una terminal específica
 		public long calcularDuracionHasta(TerminalGestionada destino) {
 			long totalHoras = 0;
 			for (Tramo tramo : tramos) {
@@ -58,7 +59,7 @@ package empresaMaritima;
 			}
 			return totalHoras;
 		}
-		
+	//indica si la ruta llega a una determinada terminal
 		public boolean contieneTerminal(TerminalGestionada terminal) {
 			for (Tramo tramo : tramos) {
 				if (tramo.getTerminalDestino().equals(terminal)) {
@@ -72,7 +73,8 @@ package empresaMaritima;
 		public LocalDateTime getFechaDeInicio() {
 			return fechaInicio;
 		}
-            
+		
+ //calcula el precio acumulado hasta la terminal destino     
 		public double calcularPrecioHasta(TerminalGestionada destino) {
 			double total = 0;
 			for (Tramo tramo : tramos) {
@@ -84,6 +86,7 @@ package empresaMaritima;
 			return total;
 		}
 		
+//cuenta cuántas escalas existen antes  de llegar al destino
 		public int cantidadDeTerminalesIntermedias(TerminalGestionada destino) {
 		    int cantidad = 0;
 		    for (Tramo tramo : tramos) {
