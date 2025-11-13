@@ -31,8 +31,9 @@ class MejorCircuitoTestCase {
         when(circuito2.contieneTerminal(destino)).thenReturn(true);
         when(circuito3.contieneTerminal(destino)).thenReturn(true);
 	}
+	
 
-	@Test
+	@Test 
     void testSeleccionaCircuitoConMenorTiempo() {
         when(circuito1.calcularDuracionHasta(destino)).thenReturn(50L);
         when(circuito2.calcularDuracionHasta(destino)).thenReturn(30L);

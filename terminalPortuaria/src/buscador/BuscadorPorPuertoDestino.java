@@ -30,6 +30,6 @@ public class BuscadorPorPuertoDestino implements BuscadorDeTrayectosStrategy {
                 }
             }
 
-            return resultado;
+         return resultado;
     }
 }

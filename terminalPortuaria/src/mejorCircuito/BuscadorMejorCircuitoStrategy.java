@@ -7,6 +7,6 @@ import empresaMaritima.TerminalGestionada;
 
 public interface BuscadorMejorCircuitoStrategy {
 	
-	CircuitoMaritimo seleccionarMejorCircuito(List<CircuitoMaritimo> circuitos, TerminalGestionada destino);
+	CircuitoMaritimo seleccionarMejorCircuito(List<CircuitoMaritimo> circuitos, TerminalGestionada destino); //metodo que implementa cada estrategia para seleccionar el mejor circuito
 	
 }
