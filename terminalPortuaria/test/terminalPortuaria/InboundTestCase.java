@@ -28,7 +28,7 @@ class InboundTestCase {
         
         inbound.actualizarPosicion(buqueSpy, 0.0, terminalMock);
         
-        verify(terminalMock).notificarConsignees("El buque llego a destino", eq(buqueSpy));
+        verify(terminalMock).notificarConsignees("El buque llego a destino", buqueSpy);
         verify(buqueSpy).setEstado(any(Arrived.class));
     }
 

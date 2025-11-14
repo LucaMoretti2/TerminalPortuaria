@@ -7,11 +7,11 @@ import java.util.Date;
 public class Tramo {
 	    private double precio;
 	    private Date tiempo;
-	    private String terminalOrigen;
-	    private String terminalDestino;
+	    private TerminalGestionada terminalOrigen;
+	    private TerminalGestionada terminalDestino;
 
 	    
-	 public Tramo(double precio, Date tiempo, String terminalOrigen, String terminalDestino) {
+	 public Tramo(double precio, Date tiempo, TerminalGestionada terminalOrigen, TerminalGestionada terminalDestino) {
 	        this.precio = precio;
 	        this.tiempo = tiempo;
 	        this.terminalOrigen = terminalOrigen;
@@ -34,11 +34,11 @@ public class Tramo {
 	        this.tiempo = tiempo;
 	    }
 
-	    public String getTerminalOrigen() {
+	    public TerminalGestionada getTerminalOrigen() {
 	        return terminalOrigen;
 	    }
 
-	    public String getTerminalDestino() {
+	    public TerminalGestionada getTerminalDestino() {
 	        return terminalDestino;
 	    }
 

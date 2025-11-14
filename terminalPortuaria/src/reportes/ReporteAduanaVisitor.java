@@ -7,18 +7,20 @@ import empresaMaritima.Buque;
 
 public class ReporteAduanaVisitor implements ReporteVisitor {
 
-    @Override
-    public void visit(Buque buque) {
-        System.out.println("<html><body>");
-        System.out.println("<h1>Reporte Aduana</h1>");
-        System.out.println("<p>Buque: " + buque.getNombre() + "</p>");
-        System.out.println("<ul>");
-        for (Container c : buque.getCargas()) {
-            c.accept(this);
+     @Override
+        public void visit(Buque buque) {
+            System.out.println("<html><body>");
+            System.out.println("Buque: " + buque.getNombre());
+            System.out.println("<ul>");
+
+            for (Container c : buque.getCargas()) {
+                System.out.println("<li>" + c.getTipo() + " - " + c.getIDContainer() + "</li>");
+            }
+
+            System.out.println("</ul>");
+            System.out.println("</body></html>");
         }
-        System.out.println("</ul>");
-        System.out.println("</body></html>");
-    }
+
 
     @Override
     public void visit(Container container) {

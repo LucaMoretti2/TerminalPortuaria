@@ -1,8 +1,7 @@
 package terminalPortuaria;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,82 +20,106 @@ import empresaMaritima.TerminalGestionada;
 
 class BuscadorDeTrayectosTestCase {
 
-	TerminalGestionada destino;
+    TerminalGestionada destino;
     CircuitoMaritimo circuito1;
     CircuitoMaritimo circuito2;
     LocalDateTime fechaLimite;
+
     BuscadorDeTrayectosStrategy criterio1;
     BuscadorDeTrayectosStrategy criterio2;
+
     CircuitoMaritimo c1, c2;
-	
-	@BeforeEach
-	void setUp(){
-		destino = mock(TerminalGestionada.class);
 
-	    circuito1 = mock(CircuitoMaritimo.class);
-	    circuito2 = mock(CircuitoMaritimo.class);
+    @BeforeEach
+    void setUp() {
+        destino = mock(TerminalGestionada.class);
 
-	    when(circuito1.contieneTerminal(destino)).thenReturn(true);
-	    when(circuito2.contieneTerminal(destino)).thenReturn(false);
+        circuito1 = mock(CircuitoMaritimo.class);
+        circuito2 = mock(CircuitoMaritimo.class);
 
-	    when(circuito1.getFechaDeInicio()).thenReturn(LocalDateTime.of(2025, 1, 1, 0, 0));
-	    when(circuito2.getFechaDeInicio()).thenReturn(LocalDateTime.of(2025, 1, 10, 0, 0));
+        when(circuito1.contieneTerminal(destino)).thenReturn(true);
+        when(circuito2.contieneTerminal(destino)).thenReturn(false);
 
-	    when(circuito1.calcularTiempoTotalHoras()).thenReturn(24L);
-	    when(circuito2.calcularTiempoTotalHoras()).thenReturn(72L);
+        when(circuito1.getFechaDeInicio()).thenReturn(LocalDateTime.of(2025, 1, 1, 0, 0));
+        when(circuito2.getFechaDeInicio()).thenReturn(LocalDateTime.of(2025, 1, 10, 0, 0));
 
-	    fechaLimite = LocalDateTime.of(2025, 1, 5, 0, 0);
-	}
+        when(circuito1.calcularTiempoTotalHoras()).thenReturn(24L);
+        when(circuito2.calcularTiempoTotalHoras()).thenReturn(72L);
 
-	@Test
-	void testBuscadorPorPuertoDestinoDevuelveCircuitosQueContienenDestino() {
-	    BuscadorPorPuertoDestino buscador = new BuscadorPorPuertoDestino(List.of(circuito1, circuito2));
-	    List<CircuitoMaritimo> resultado = buscador.buscar(destino, fechaLimite);
+        fechaLimite = LocalDateTime.of(2025, 1, 5, 0, 0);
 
-	    assertEquals(1, resultado.size());
-	    assertTrue(resultado.contains(circuito1));
-	}
-	
-	//
-	@Test
-	void testBuscadorPorFechaDeSalidaDevuelveCircuitosConFechaPosterior() {
-		when(circuito1.getFechaDeInicio()).thenReturn(LocalDateTime.of(2025, 1, 10, 0, 0));
-	    BuscadorPorFechaDeSalida buscador = new BuscadorPorFechaDeSalida(List.of(circuito1));
-	    List<CircuitoMaritimo> resultado = buscador.buscar(destino, fechaLimite);
+     
+        criterio1 = mock(BuscadorDeTrayectosStrategy.class);
+        criterio2 = mock(BuscadorDeTrayectosStrategy.class);
 
-	    assertEquals(1, resultado.size());
-	    assertTrue(resultado.contains(circuito1));
-	}
-	
-	@Test
-	void testBuscadorPorFechaDeLlegadaDevuelveCircuitosConLlegadaAntesDeFechaLimite() {
-	    BuscadorDeTrayectosStrategy buscador = new BuscadorPorFechaDeLlegada(List.of(circuito1), fechaLimite);
+        c1 = mock(CircuitoMaritimo.class);
+        c2 = mock(CircuitoMaritimo.class);
+    }
 
-	    List<CircuitoMaritimo> resultado = buscador.buscar(destino, fechaLimite);
+    @Test
+    void testBuscadorPorPuertoDestinoDevuelveCircuitosQueContienenDestino() {
+        BuscadorPorPuertoDestino buscador =
+                new BuscadorPorPuertoDestino(List.of(circuito1, circuito2));
 
-	    assertEquals(1, resultado.size());
-	    assertTrue(resultado.contains(circuito1));
-	}	
-	
-	
-	
-	@Test
-	void testBuscadorAndDevuelveInterseccionDeResultados() {
-	    BuscadorDeTrayectosStrategy buscadorAnd = 	new BuscadorAnd(criterio1, criterio2);
-	    List<CircuitoMaritimo> resultado = buscadorAnd.buscar(destino, fechaLimite);
+        List<CircuitoMaritimo> resultado = buscador.buscar(destino, fechaLimite);
 
-	    assertEquals(1, resultado.size());
-	    assertTrue(resultado.contains(c2));
-	}
-	
-	@Test
-	void testBuscadorOrDevuelveUnionDeResultadosSinDuplicados() {
-	    BuscadorDeTrayectosStrategy buscadorOr = new BuscadorOr(criterio1, criterio2);
-	    List<CircuitoMaritimo> resultado = buscadorOr.buscar(destino, fechaLimite);
+        assertEquals(1, resultado.size());
+        assertTrue(resultado.contains(circuito1));
+    }
 
-	    assertEquals(2, resultado.size());
-	    assertTrue(resultado.contains(c1));
-	    assertTrue(resultado.contains(c2));
-	}
-	
+    @Test
+    void testBuscadorPorFechaDeSalidaDevuelveCircuitosConFechaPosterior() {
+        when(circuito1.getFechaDeInicio())
+                .thenReturn(LocalDateTime.of(2025, 1, 10, 0, 0));
+
+        BuscadorPorFechaDeSalida buscador =
+                new BuscadorPorFechaDeSalida(List.of(circuito1));
+
+        List<CircuitoMaritimo> resultado = buscador.buscar(destino, fechaLimite);
+
+        assertEquals(1, resultado.size());
+        assertTrue(resultado.contains(circuito1));
+    }
+
+    @Test
+    void testBuscadorPorFechaDeLlegadaDevuelveCircuitosConLlegadaAntesDeFechaLimite() {
+        BuscadorDeTrayectosStrategy buscador =
+                new BuscadorPorFechaDeLlegada(List.of(circuito1), fechaLimite);
+
+        List<CircuitoMaritimo> resultado = buscador.buscar(destino, fechaLimite);
+
+        assertEquals(1, resultado.size());
+        assertTrue(resultado.contains(circuito1));
+    }
+
+    @Test
+    void testBuscadorAndDevuelveInterseccionDeResultados() {
+        when(criterio1.buscar(destino, fechaLimite)).thenReturn(List.of(c1, c2));
+        when(criterio2.buscar(destino, fechaLimite)).thenReturn(List.of(c2));
+
+        BuscadorDeTrayectosStrategy buscadorAnd =
+                new BuscadorAnd(criterio1, criterio2);
+
+        List<CircuitoMaritimo> resultado =
+                buscadorAnd.buscar(destino, fechaLimite);
+
+        assertEquals(1, resultado.size());
+        assertTrue(resultado.contains(c2));
+    }
+
+    @Test
+    void testBuscadorOrDevuelveUnionDeResultadosSinDuplicados() {
+        when(criterio1.buscar(destino, fechaLimite)).thenReturn(List.of(c1, c2));
+        when(criterio2.buscar(destino, fechaLimite)).thenReturn(List.of(c2));
+
+        BuscadorDeTrayectosStrategy buscadorOr =
+                new BuscadorOr(criterio1, criterio2);
+
+        List<CircuitoMaritimo> resultado =
+                buscadorOr.buscar(destino, fechaLimite);
+
+        assertEquals(2, resultado.size());
+        assertTrue(resultado.contains(c1));
+        assertTrue(resultado.contains(c2));
+    }
 }

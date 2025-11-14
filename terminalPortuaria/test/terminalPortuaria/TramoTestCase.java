@@ -1,9 +1,14 @@
 package terminalPortuaria;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import buscador.BuscadorDeTrayectosStrategy;
+import buscador.BuscadorPorFechaDeLlegada;
+import empresaMaritima.TerminalGestionada;
 import empresaMaritima.Tramo;
 
 import java.util.Date;
@@ -18,16 +23,26 @@ class TramoTestCase {
     
         long dosHorasEnMilis = 2L * 60 * 60 * 1000;
         fecha = new Date(dosHorasEnMilis);
-
-        tramo = new Tramo(5000.0, fecha, "Buenos Aires", "Brasil");
+        
+        BuscadorDeTrayectosStrategy motorDeBusqueda = mock(BuscadorPorFechaDeLlegada.class);
+        TerminalGestionada buenosAires = new TerminalGestionada(20.0, "Puerto Buenos Aires", motorDeBusqueda);
+        TerminalGestionada rio = new TerminalGestionada(120.0, "Rio de janeiro", motorDeBusqueda);
+        tramo = new Tramo(5000.0, fecha, buenosAires, rio);
     }
 
     @Test
     void testGetters() {
+    	
+        BuscadorDeTrayectosStrategy motorDeBusqueda = mock(BuscadorPorFechaDeLlegada.class);
+        TerminalGestionada buenosAires = new TerminalGestionada(20.0, "Puerto Buenos Aires", motorDeBusqueda);
+        TerminalGestionada rio = new TerminalGestionada(120.0, "Rio de janeiro", motorDeBusqueda);
+        tramo = new Tramo(5000.0, fecha, buenosAires, rio); 
+        
+        
         assertEquals(5000.0, tramo.getPrecio());
         assertEquals(fecha, tramo.getTiempo());
-        assertEquals("Buenos Aires", tramo.getTerminalOrigen());
-        assertEquals("Brasil", tramo.getTerminalDestino());
+        assertEquals(buenosAires, tramo.getTerminalOrigen());
+        assertEquals(rio, tramo.getTerminalDestino());
     }
 
     @Test

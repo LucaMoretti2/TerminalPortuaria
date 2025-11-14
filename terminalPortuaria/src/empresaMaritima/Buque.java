@@ -16,7 +16,9 @@ public class Buque  implements ReporteVisitable{
 	
 	private Double gps;
 	
-	private Set<Container> cargas;
+	//private Set<Container> cargas;
+	
+	private Set<Container> cargas = new HashSet<>();
 	
 	EstadoDelBuque estado;		// El estado con el que se encuentra al momento es 'Outbound' e implementa el patrón State,
 	

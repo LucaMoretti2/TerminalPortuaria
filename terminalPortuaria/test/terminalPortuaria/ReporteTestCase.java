@@ -19,7 +19,11 @@ import reportes.ReporteMuelleVisitor;
 //Como los reportes imprimen su salida directamente por consola, el test redirige temporalmente System.out 
 //hacia un ByteArrayOutputStream para capturar y analizar el texto producido por cada visitor.
 class ReporteTestCase {
-
+	
+	private String limpiar(String s) {
+	    return s.replaceAll("\s+", "");
+	}
+	
     @Test
     void testTodosLosReportes() {
 
@@ -62,7 +66,9 @@ class ReporteTestCase {
     //produce un documento HTML 
         ReporteAduanaVisitor reporteAduana = new ReporteAduanaVisitor();
         reporteAduana.visit(buque); 
-
+        
+        
+        
         String outAduana = salida.toString();
         assertTrue(outAduana.contains("<html><body>"));
         assertTrue(outAduana.contains("Buque: Titanic"));

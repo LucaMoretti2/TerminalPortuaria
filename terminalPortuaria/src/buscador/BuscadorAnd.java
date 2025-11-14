@@ -19,7 +19,7 @@ public class BuscadorAnd implements BuscadorDeTrayectosStrategy{
 
    @Override
    public List<CircuitoMaritimo> buscar(TerminalGestionada destino, LocalDateTime fechaLimite) {
-       // TODO Auto-generated method stub
+      
 
        List<CircuitoMaritimo> resultado1 = criterio1.buscar(destino, fechaLimite);
        List<CircuitoMaritimo> resultado2 = criterio2.buscar(destino, fechaLimite);

@@ -1,9 +1,12 @@
 package terminalPortuaria;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import buscador.BuscadorDeTrayectosStrategy;
 import buscador.BuscadorPorFechaDeLlegada;
 import empresaMaritima.CircuitoMaritimo;
 import empresaMaritima.TerminalGestionada;
@@ -22,18 +25,30 @@ class CircuitoMaritimoTestCase {
     private Tramo tramo2;
     private Tramo tramo3;
     private LocalDateTime llegada;
-    private TerminalGestionada destinoMock;
+    private TerminalGestionada buenosAires ;
+    private TerminalGestionada rio;
+    private TerminalGestionada paraguay;
+    private TerminalGestionada peru;
+    private BuscadorDeTrayectosStrategy motorDeBusqueda;
 
     @BeforeEach
     void setUp() {
+    	
+    	motorDeBusqueda = mock(BuscadorPorFechaDeLlegada.class);
+        buenosAires = new TerminalGestionada(20.0, "Puerto Buenos Aires", motorDeBusqueda);
+        rio = new TerminalGestionada(120.0, "Rio de janeiro", motorDeBusqueda);
+        paraguay = new TerminalGestionada(80.0, "Paraguay", motorDeBusqueda);
+        peru = new TerminalGestionada(300.0, "Paraguay", motorDeBusqueda);
+      
         circuito = new CircuitoMaritimo("Ruta Sur");
-        tramo1 = new Tramo(1000.0, new Date(2L * 60 * 60 * 1000), "Buenos Aires", "Brasil"); 
-        tramo2 = new Tramo(2000.0, new Date(3L * 60 * 60 * 1000), "Brasil", "Paraguay");       
-        tramo3 = new Tramo(1500.0, new Date(1L * 60 * 60 * 1000), "Paraguay", "Peru");   
+        tramo1 = new Tramo(1000.0, new Date(2L * 60 * 60 * 1000), buenosAires, rio); 
+        tramo2 = new Tramo(2000.0, new Date(3L * 60 * 60 * 1000), rio, paraguay);       
+        tramo3 = new Tramo(1500.0, new Date(1L * 60 * 60 * 1000), paraguay, peru);   
+        
         llegada = LocalDateTime.of(2025, 11, 1, 8, 0);
         List<CircuitoMaritimo> lista = new ArrayList<>();
         lista.add(circuito);
-        destinoMock = new TerminalGestionada(5.0,"Retiro",new BuscadorPorFechaDeLlegada(lista,llegada));
+        
     }
     //Test 1: nombre y lista inicial
     @Test
