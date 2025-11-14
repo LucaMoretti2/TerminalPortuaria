@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import actores.ActorPortuario;
 import actores.Shipper;
 import containers.Container;
 import empresaMaritima.Buque;
@@ -86,12 +87,12 @@ class OrdenDeExportacionTestCase {
     void testGetResponsablePago() {
         when(shipperMock.getNombre()).thenReturn("Empresa Exportadora S.A.");
 
-        String responsable = orden.getResposablePago();
+        ActorPortuario responsable = orden.getResponsablePago();
 
-        assertEquals("Empresa Exportadora S.A.", responsable);
+        assertEquals(shipperMock, responsable);
+        assertEquals("Empresa Exportadora S.A.", responsable.getNombre());
         verify(shipperMock).getNombre();
     }
-
     //sTest 4: Calcular costo total sin servicios
     @Test
     void testCalcularCostoTotalSinServicios() {

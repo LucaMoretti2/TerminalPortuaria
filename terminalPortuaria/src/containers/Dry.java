@@ -23,7 +23,10 @@ public class Dry extends Container {
 	public List<BillOfLading> getBls() {
         return List.copyOf(bls);
     }
-
+	@Override
+	public String toString() {
+	    return idContainer;
+	}
 //calcula el peso total de la carga contenida en los BL
 
 	public double getPesoTotalDeBLs() {

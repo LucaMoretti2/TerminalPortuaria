@@ -36,6 +36,7 @@ public class Viaje {
 //calcula la fecha estimada de llegada a una terminal destino
 	public LocalDateTime calcularFechaArribo(TerminalGestionada destino) {
 		long horas = circuito.calcularDuracionHasta(destino);
+		this.fechaArriboDestino = fechaInicio.plusHours(horas);
 		return fechaInicio.plusHours(horas);
 	}
 //suma los precios de todos los tramos del circuito
@@ -59,7 +60,6 @@ public class Viaje {
 		return naviera;
 	}
 	
-
 	public LocalDateTime getArribo() {
 		return fechaArriboDestino;
 	}
@@ -71,6 +71,14 @@ public class Viaje {
 	public Set<Container> getContenedores(){
 		return buque.getCargas();
 	}
-	
+	@Override
+	public String toString() {
+	    return "Viaje " + idViaje +
+	            " | Buque: " + buque.getNombre() +
+	            " | Origen: " + terminalOrigen.getNombre() +
+	            " | Destino: " + terminalDestino.getNombre() +
+	            " | Partida: " + fechaInicio +
+	            " | Arribo estimado: " + fechaArriboDestino;
+	}
 	
 }

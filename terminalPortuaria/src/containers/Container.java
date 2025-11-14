@@ -32,7 +32,7 @@ public abstract class Container implements ReporteVisitable {
 		this.pesoTotal = pesoTotal;
 		this.idContainer = idContainer;
 		this.fechaDeIngreso = fechaDeIngreso;
-		this.fechaDeRetiro = null;
+		this.fechaDeRetiro = fechaDeRetiro;
 		
 	}
 	
@@ -72,17 +72,19 @@ public abstract class Container implements ReporteVisitable {
     }
  //calcula el costo acumulado de los servicios
     
-    public double costoTotalDeServicios(){
-    	
-    	double costoHastaAhora= 0;
-    	for (Servicio s: servicios) {
-    		costoHastaAhora += s.precioFijo;
-    	}
-    	return costoHastaAhora;
+    public double costoTotalDeServicios() {
+        double costoHastaAhora = 0;
+        for (Servicio s : servicios) {
+            costoHastaAhora += s.calcularCosto(this);
+        }
+        return costoHastaAhora;
     }
     
     public String getTipo() {
     	return tipo;
+    }
+    public List<Servicio> getServicios() {
+        return servicios;
     }
  //Implementa la interfaz ReporteVisitable para integrarse con el patrón Visitor,
  // permitiendo que distintos tipos de reportes procesen la información del container

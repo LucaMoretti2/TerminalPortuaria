@@ -14,8 +14,8 @@ public class Inbound implements EstadoDelBuque{
 	public void actualizarPosicion(Buque buque, Double gps, TerminalGestionada terminal) {
 		
 		if (gps == 0.0) {
-			System.out.println("El buque" + buque.nombreBuque + "llegó a terminal");
-			System.out.println("Cambiando el estado a Arrived...");
+			System.out.println("El buque " + buque.nombreBuque + " llegó a terminal");
+			//System.out.println("Cambiando el estado a Arrived...");
 			terminal.notificarConsignees("El buque llego a destino", buque);
 			buque.setEstado(new Arrived());
 		}

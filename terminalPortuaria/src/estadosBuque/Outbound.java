@@ -11,8 +11,8 @@ public class Outbound implements EstadoDelBuque{
 	//Si la posición GPS indica que el buque está regresando a puerto   (gps <= 50.0), 
 		//se cambia al estado Inbound y se notifica a los consignees.
 		if (gps <= 50.0) {
-			System.out.println("El buque" + buque.getNombre() + "se encuentra cercano a terminal");
-			System.out.println("Cambiando a Inbound...");
+			System.out.println("El buque " + buque.getNombre() + " se encuentra cercano a terminal");
+			//System.out.println("Cambiando a Inbound...");
 			terminal.notificarConsignees("El buque esta pronto al arrivo", buque);
 			buque.setEstado(new Inbound());
 			}

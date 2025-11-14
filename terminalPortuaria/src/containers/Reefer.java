@@ -47,4 +47,11 @@ public class Reefer extends Container {
 	public BillOfLading getBl() {
 		return bl;
 	}
+	@Override
+	public String toString() {
+	    return idContainer;
+	}
+	public void setBl(BillOfLading bl) {
+		this.bl= bl;
+	}
 }

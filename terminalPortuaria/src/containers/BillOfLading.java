@@ -19,6 +19,10 @@ public class BillOfLading {
 		this.importador = importador;
 	}
 	
+	
+	public String toString() {
+	    return tipoDeProducto;
+	}
 	public String getTipoDeProducto() { 
 		return tipoDeProducto; 
 	}

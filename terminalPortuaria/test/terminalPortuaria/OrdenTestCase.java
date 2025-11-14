@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import actores.ActorPortuario;
 import containers.Container;
 import empresaMaritima.Buque;
 import empresaMaritima.Viaje;
@@ -36,7 +37,10 @@ class OrdenTestCase {
     private Servicio servicio2;
 
     private Orden orden;
-
+    
+    @Mock
+    private ActorPortuario responsableMock;
+    
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -48,8 +52,8 @@ class OrdenTestCase {
             }
 
             @Override
-            public String getResposablePago() {
-                return "Cliente Cordoba";
+            public ActorPortuario getResponsablePago() {
+                return responsableMock;
             }
         };
     }
@@ -98,6 +102,11 @@ class OrdenTestCase {
     // Test 5: obtener responsable de pago
     @Test
     void testGetResponsablePago() {
-        assertEquals("Cliente Cordoba", orden.getResposablePago());
+        when(responsableMock.getNombre()).thenReturn("Cliente Cordoba");
+
+        ActorPortuario r = orden.getResponsablePago();
+
+        assertEquals(responsableMock, r);
+        assertEquals("Cliente Cordoba", r.getNombre());
     }
 }

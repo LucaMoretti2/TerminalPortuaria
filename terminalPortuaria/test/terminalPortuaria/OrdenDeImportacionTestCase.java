@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import actores.ActorPortuario;
 import actores.Consignee;
 import containers.Container;
 import empresaMaritima.Buque;
@@ -121,12 +122,14 @@ class OrdenDeImportacionTestCase {
    //La obtención del responsable de pago
     @Test
     void testGetResponsablePago() {
-        when(consigneeMock.getNombre()).thenReturn("Importadora S.A.");
+        when(consigneeMock.getNombre()).thenReturn("Empresa Exportadora S.A.");
 
-        assertEquals("Importadora S.A.", orden.getResposablePago());
+        ActorPortuario responsable = orden.getResponsablePago();
+
+        assertEquals(consigneeMock, responsable);
+        assertEquals("Empresa Exportadora S.A.", responsable.getNombre());
         verify(consigneeMock).getNombre();
     }
-
 
     @Test
     void testGetConsignee() {

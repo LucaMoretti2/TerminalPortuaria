@@ -3,11 +3,13 @@ package ordenes;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import actores.ActorPortuario;
 import actores.Consignee;
 import containers.Container;
 import empresaMaritima.Buque;
 import empresaMaritima.Camion;
 import empresaMaritima.Chofer;
+import empresaMaritima.Factura;
 import empresaMaritima.Viaje;
 
 
@@ -55,11 +57,9 @@ public class OrdenDeImportacion extends Orden {
 //el pago corresponde al consignee	
 
 	@Override
-	public String getResposablePago() {
-		// TODO Auto-generated method stub
-		return consignee.getNombre();
+	public ActorPortuario getResponsablePago() {
+	     return consignee;
 	}
-
 	public Consignee getConsignee() {
 		// TODO Auto-generated method stub
 		return consignee;
@@ -104,5 +104,6 @@ public class OrdenDeImportacion extends Orden {
 	public void setDiasExcedentes(int diasExcedentes) {
 		this.diasExcedentes = diasExcedentes;
 	}
+	
 
 }

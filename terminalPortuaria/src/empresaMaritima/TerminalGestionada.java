@@ -33,7 +33,7 @@ public class TerminalGestionada{
 	//Estrategia que define cómo se buscan los trayectos marítimos hacia otras terminales <PUERTOS>
 	BuscadorDeTrayectosStrategy motorDeBusqueda; 
 	// Estrategia que define el mejor circuito entre varios posibles.
-	BuscadorMejorCircuitoStrategy criterioSeleccion; 
+	private BuscadorMejorCircuitoStrategy criterioSeleccion; 
 	
 	//Lista de entidades registradas en la terminal.
 	List<Naviera> navieras = new ArrayList<>();
@@ -226,7 +226,24 @@ public class TerminalGestionada{
 	}
 	
 	public CircuitoMaritimo obtenerMejorCircuito(TerminalGestionada destino) {
-	    return criterioSeleccion.seleccionarMejorCircuito(circuitos, destino);
+	    return getCriterioSeleccion().seleccionarMejorCircuito(circuitos, destino);
+	}
+
+
+	public String getNombre() {
+		// TODO Auto-generated method stub
+		return nombre;
+	}
+
+
+	public BuscadorDeTrayectosStrategy getMotorDeBusqueda() {
+		// TODO Auto-generated method stub
+		return motorDeBusqueda;
+	}
+
+
+	public BuscadorMejorCircuitoStrategy getCriterioSeleccion() {
+		return criterioSeleccion;
 	}
 	
 	

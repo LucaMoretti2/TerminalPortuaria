@@ -30,6 +30,13 @@ public class Tanque extends Container {
 		return bl;
 	}
 	
+	@Override
+	public String toString() {
+	    return idContainer;
+	}
+	public void setBl(BillOfLading bl) {
+		this.bl= bl;
+	}
 	//simula la inspección obligatoria del tanque en una fecha determinada.
 	public void revisarDiaria(LocalDateTime fecha) {
 		 

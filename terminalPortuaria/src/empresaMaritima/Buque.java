@@ -53,6 +53,10 @@ public class Buque  implements ReporteVisitable{
 		return nombreBuque;
 	}
 
+	public String toString() {
+	    return nombreBuque;
+	}
+
 	public Set<Container> getCargas() {
 		return cargas;
 	}

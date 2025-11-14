@@ -8,8 +8,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="lib" path="/home/marianela/Descargas/net.bytebuddy.byte-buddy-agent_1.15.7.jar"/>
-	<classpathentry kind="lib" path="/home/marianela/Descargas/mockito-core-5.14.2 (1).jar"/>
-	<classpathentry kind="lib" path="/home/marianela/Descargas/byte-buddy-1.15.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/belsh/Downloads/byte-buddy-1.15.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/belsh/Downloads/net.bytebuddy.byte-buddy-agent_1.15.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/belsh/Downloads/mockito-core-5.14.2 (1).jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

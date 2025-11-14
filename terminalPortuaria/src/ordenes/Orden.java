@@ -1,11 +1,14 @@
 package ordenes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import actores.ActorPortuario;
 import containers.Container;
 import empresaMaritima.Buque;
+import empresaMaritima.Factura;
 import empresaMaritima.Viaje;
 import serviciosDeContainer.Servicio;
 
@@ -26,7 +29,7 @@ public abstract class Orden {
 		this.container = container;
 		this.viaje = viaje;
 		this.fechaDeRegistro= LocalDateTime.now();
-		this.servicios = new ArrayList<>();
+		this.servicios = new ArrayList<>(container.getServicios());
 		this.buque = buque;
 	}
 //agrega un servicio adicional a la orden
@@ -55,8 +58,16 @@ public abstract class Orden {
 	public abstract double calcularCostoTotal();
 	
 //método abstracto para saber quién debe pagar la orden
-	public abstract String getResposablePago();
+	public abstract ActorPortuario getResponsablePago();
 
+	public Factura generarFactura() {
+	    return new Factura(
+	            LocalDate.now(),
+	            getResponsablePago(),
+	            servicios,
+	            container
+	    );
+	}
 	public LocalDateTime getFechaDeRegistro() {
 		return fechaDeRegistro;
 	}
@@ -70,7 +81,15 @@ public abstract class Orden {
 		// TODO Auto-generated method stub
 		return servicios;
 	}
-
-
 	
+
+	public String toString() {
+	    return getClass().getSimpleName()  +
+	            "| container = " + container +
+	            "| viaje = " + viaje +
+	            " | buque = " + buque +
+	            " | fecha = " + fechaDeRegistro +
+	            " | servicios = " + servicios ;
+	}
 }
+

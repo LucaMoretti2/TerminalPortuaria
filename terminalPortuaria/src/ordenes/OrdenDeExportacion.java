@@ -2,6 +2,7 @@ package ordenes;
 
 import java.time.LocalDateTime;
 
+import actores.ActorPortuario;
 import actores.Shipper;
 import containers.Container;
 import empresaMaritima.Buque;
@@ -37,14 +38,10 @@ public class OrdenDeExportacion extends Orden {
 	}
 //el responsable del pago es el shipper
 
-
 	@Override
-	public String getResposablePago() {
-		// TODO Auto-generated method stub
-		return getShipper().getNombre();
+	public ActorPortuario getResponsablePago() {
+	     return shipper;
 	}
-
-
 	public Shipper getShipper() {
 		return shipper;
 	}
