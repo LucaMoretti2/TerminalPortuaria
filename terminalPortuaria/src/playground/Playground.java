@@ -31,6 +31,9 @@ import estadosBuque.Working;
 import mejorCircuito.MenorTiempo;
 import ordenes.OrdenDeExportacion;
 import ordenes.OrdenDeImportacion;
+import reportes.ReporteAduanaVisitor;
+import reportes.ReporteBuqueVisitor;
+import reportes.ReporteMuelleVisitor;
 import serviciosDeContainer.Almacenamiento;
 import serviciosDeContainer.Electricidad;
 import serviciosDeContainer.Lavado;
@@ -204,6 +207,19 @@ public class Playground {
         }
         System.out.println("Criterio utilizado: " + uruguay.getCriterioSeleccion().getClass().getSimpleName());
         System.out.println("===============================");
+        
+        System.out.println("=== Generar reportes===");
+        System.out.println("=== Reporte de Buque ===");
+        ReporteBuqueVisitor reporteBuque = new ReporteBuqueVisitor();
+        buque.accept(reporteBuque);
+        System.out.println("=============================");
+        System.out.println("=== Reporte de Aduana ===");
+        ReporteAduanaVisitor reporteAduana = new ReporteAduanaVisitor();
+        buque.accept(reporteAduana);
+        System.out.println("=============================");
+        ReporteMuelleVisitor reporteMuelle = new ReporteMuelleVisitor();
+        buque.accept(reporteMuelle);
+ 
 
         System.out.println("========== FIN  ==========");
     }

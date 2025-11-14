@@ -18,4 +18,8 @@ public abstract class Servicio {
 	}
 	
 	protected abstract double calcularCostoVariable(Container container);
+	
+	public String toString() {
+	    return this.getClass().getSimpleName() ;
+	}
 }
