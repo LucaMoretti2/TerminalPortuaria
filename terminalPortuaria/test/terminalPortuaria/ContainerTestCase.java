@@ -1,7 +1,9 @@
 package terminalPortuaria;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 
@@ -67,20 +69,20 @@ class ContainerTestCase {
 	
 // Test 4: Cálculo del costo total de servicios aplicados al contenedor
 	@Test
-	void testCostoTotalDeServicios() {
-	    Dry container = new Dry(2, 3, 6, 5000, "1234", ingreso, retiro);
+    void testCostoTotalDeServicios() {
+        Dry container = new Dry(2, 3, 6, 5000, "1234", ingreso, retiro);
 
-	    Servicio s1 = mock(Servicio.class);
-	    Servicio s2 = mock(Servicio.class);
+        Servicio s1 = mock(Servicio.class);
+        Servicio s2 = mock(Servicio.class);
 
-	    s1.precioFijo = 100;
-	    s2.precioFijo = 200;
+        when(s1.getPrecioFijo()).thenReturn(100.0);
+        when(s2.getPrecioFijo()).thenReturn(200.0);
 
-	    container.addServicio(s1);
-	    container.addServicio(s2);
+        container.addServicio(s1);
+        container.addServicio(s2);
 
-	    double total = container.costoTotalDeServicios();
-	    assertEquals(300, total);
-	}
+        double total = container.costoTotalDeServicios();
+        assertEquals(300, total);
+    }
 	
 }

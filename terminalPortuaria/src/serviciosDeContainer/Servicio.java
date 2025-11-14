@@ -22,4 +22,6 @@ public abstract class Servicio {
 	public String toString() {
 	    return this.getClass().getSimpleName() ;
 	}
+
+	public double getPrecioFijo() { return precioFijo;}
 }

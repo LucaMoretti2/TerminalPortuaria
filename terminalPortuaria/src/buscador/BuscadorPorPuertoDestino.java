@@ -19,7 +19,7 @@ public class BuscadorPorPuertoDestino implements BuscadorDeTrayectosStrategy {
 
     @Override
     public List<CircuitoMaritimo> buscar(TerminalGestionada destino, LocalDateTime fechaLimite) {
-        // TODO Auto-generated method stub
+       
 
         List<CircuitoMaritimo> resultado = new ArrayList<>();
 

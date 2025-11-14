@@ -75,7 +75,7 @@ public abstract class Container implements ReporteVisitable {
     public double costoTotalDeServicios() {
         double costoHastaAhora = 0;
         for (Servicio s : servicios) {
-            costoHastaAhora += s.calcularCosto(this);
+            costoHastaAhora += s.getPrecioFijo(); 
         }
         return costoHastaAhora;
     }

@@ -1,14 +1,16 @@
 package playground;
 
 import java.time.LocalDateTime;
+
 import java.util.Date;
 import java.util.List;
 
 import actores.Consignee;
 import actores.Shipper;
+import buscador.BuscadorAnd;
 import buscador.BuscadorDeTrayectosStrategy;
 import buscador.BuscadorPorFechaDeLlegada;
-import buscador.BuscadorPorFechaDeSalida;
+import buscador.BuscadorPorPuertoDestino;
 import containers.BillOfLading;
 import containers.Dry;
 import containers.Reefer;
@@ -35,7 +37,6 @@ import reportes.ReporteAduanaVisitor;
 import reportes.ReporteBuqueVisitor;
 import reportes.ReporteMuelleVisitor;
 import serviciosDeContainer.Almacenamiento;
-import serviciosDeContainer.Electricidad;
 import serviciosDeContainer.Lavado;
 import serviciosDeContainer.Servicio;
 
@@ -130,8 +131,8 @@ public class Playground {
         //hacer una orden de importacion y exportacion
         
         Shipper shipper1 = new Shipper("Camila Arena", 111);
-        Shipper shipper2 = new Shipper("Marianela Carbone", 222);
-        Shipper shipper3 = new Shipper("Diego Cano", 333);
+        //Shipper shipper2 = new Shipper("Marianela Carbone", 222);
+        //Shipper shipper3 = new Shipper("Diego Cano", 333);
         EmpresaTransportista empresa1 = new EmpresaTransportista ("Arcos");
         Chofer chofer1 = new Chofer("Jorge");
         Camion camion1 = new Camion("123",chofer1,empresa1);
@@ -181,8 +182,40 @@ public class Playground {
         
         System.out.println("==========================");
         System.out.println("=== Busqueda de trayectos ===");
-  
+        
+        //Datos para el buscador Destino y buscadorAnd
+        BuscadorDeTrayectosStrategy buscadorDestino = new BuscadorPorPuertoDestino(uruguay.getCircuitos());
+        TerminalGestionada destinoBusqueda = rosario;
+        LocalDateTime sinFecha = null;	//NO hay fechas para este buscador
+        LocalDateTime fechaLimiteAND = LocalDateTime.of(2025, 1, 10, 0, 0);
+        BuscadorDeTrayectosStrategy criterioFecha = new BuscadorPorFechaDeLlegada(uruguay.getCircuitos(), fechaLimiteAND);
+        BuscadorAnd buscadorAnd = new BuscadorAnd(buscadorDestino, criterioFecha);
+        
+        System.out.println("Buscando circuitos hacia: " + rosario.getNombre());
+        System.out.println("Fecha límite para llegada: " + fechaLimiteAND);
+        
+        //BuscadorPorPuestoDestino
+        List<CircuitoMaritimo> circuitosEncontrados = buscadorDestino.buscar(destinoBusqueda, sinFecha); 
+        
+        if (circuitosEncontrados.isEmpty()) {
+            System.out.println("No hay circuitos directos hacia " + destinoBusqueda.getNombre());
+        } else {
+            for (CircuitoMaritimo c : circuitosEncontrados) {
+                System.out.println("Circuito encontrado según destino: " + c.getNombre());
+            }
+        } 
+        
+        //buscadorAnd
+        List<CircuitoMaritimo> resultadoAND = buscadorAnd.buscar(rosario, fechaLimiteAND);
+        
+        if (resultadoAND.isEmpty()) {
+            System.out.println("No hay circuitos que cumplan ambos criterios (destino + fecha).");
+        } else {
+            System.out.println("Circuitos que cumplen ambos criterios:");
+            resultadoAND.forEach(c -> System.out.println(" - " + c.getNombre()));
+        }
 
+        
         //busqueda de rutas
         Date duracion2Horas = new Date(2L * 60 * 60 * 1000);
         Date duracion5Horas = new Date(5L * 60 * 60 * 1000);
@@ -208,6 +241,7 @@ public class Playground {
         System.out.println("Criterio utilizado: " + uruguay.getCriterioSeleccion().getClass().getSimpleName());
         System.out.println("===============================");
         
+     
         System.out.println("=== Generar reportes===");
         System.out.println("=== Reporte de Buque ===");
         ReporteBuqueVisitor reporteBuque = new ReporteBuqueVisitor();
