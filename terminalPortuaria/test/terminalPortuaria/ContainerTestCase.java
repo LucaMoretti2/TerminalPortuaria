@@ -15,6 +15,7 @@ import containers.BillOfLading;
 import containers.Dry;
 import containers.Reefer;
 import containers.Tanque;
+import containers.TipoCarga;
 import serviciosDeContainer.Servicio;
 
 class ContainerTestCase {
@@ -36,8 +37,8 @@ class ContainerTestCase {
 
 	    Consignee consignee = mock(Consignee.class);
 	    
-	    BillOfLading bl1 = new BillOfLading("ProductoA", 1000, consignee);
-	    BillOfLading bl2 = new BillOfLading("ProductoB", 2000, consignee);
+	    BillOfLading bl1 = new BillOfLading("ProductoA", 1000, consignee, TipoCarga.SECA);
+        BillOfLading bl2 = new BillOfLading("ProductoB", 2000, consignee, TipoCarga.SECA);
 
 	    dry.addBl(bl1);
 	    dry.addBl(bl2);

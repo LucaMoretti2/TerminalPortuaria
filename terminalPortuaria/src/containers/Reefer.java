@@ -12,7 +12,7 @@ public class Reefer extends Container {
 	LocalDateTime finConexion;
 	double horasConectado;
 	BillOfLading bl; 
-	TipoCarga tipoPermitido;
+	
 	
 	public Reefer(int alto, int ancho, int largo, double pesoTotal, String idContainer, double consumoPorHora, LocalDateTime fechaDeIngreso, LocalDateTime fechaDeRetiro) {
 		super(alto, ancho, largo, pesoTotal, idContainer, fechaDeRetiro, fechaDeRetiro);

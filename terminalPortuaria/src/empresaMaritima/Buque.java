@@ -13,7 +13,7 @@ import reportes.ReporteVisitor;
 
 public class Buque implements ReporteVisitable {
 
-    private String nombreBuque;
+    public String nombreBuque;
     private Double gps;
 
     private Set<Container> cargas = new HashSet<>();
@@ -61,7 +61,9 @@ public class Buque implements ReporteVisitable {
     public String getNombre() {
         return nombreBuque;
     }
-
+    public void setCargas(Set<Container> cargas) {
+        this.cargas = cargas;
+    }
     @Override
     public String toString() {
         return nombreBuque;

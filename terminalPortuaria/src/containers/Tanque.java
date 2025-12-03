@@ -9,7 +9,6 @@ public class Tanque extends Container {
 	String tipoDeLiquido; //sustancia transportada en el tanque
 	double capacidadDeLitros; //volumen máximo del contenedor
 	BillOfLading bl;
-	TipoCarga tipoPermitido;
 	
 	
 	public Tanque(int alto, int ancho, int largo, double pesoTotal, String idContainer, LocalDateTime fechaDeIngreso, LocalDateTime fechaDeRetiro, String tipoDeLiquido, double capacidadDeLitros) {
@@ -17,7 +16,7 @@ public class Tanque extends Container {
 		this.tipoDeLiquido = tipoDeLiquido;
 		this.capacidadDeLitros = capacidadDeLitros;
 		this.tipo = "Tanque";
-		this.tipoPermitido = TipoCarga.LIQUIDA;
+        this.tipoPermitido = TipoCarga.LIQUIDA;
 	}
 	
 	public double getCapacidadDeLitros(){

@@ -23,9 +23,10 @@ public abstract class Container implements ReporteVisitable {
 	LocalDateTime fechaDeIngreso; 
 	LocalDateTime fechaDeRetiro; 
 	String tipo;
-	TipoCarga tipoPermitido;
+	protected TipoCarga tipoPermitido;
 	
 	
+
 	public Container(int alto, int ancho, int largo, double pesoTotal, String idContainer, LocalDateTime fechaDeIngreso, LocalDateTime fechaDeRetiro) {
 		this.alto = alto;
 		this.ancho = ancho;
