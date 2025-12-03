@@ -23,6 +23,7 @@ public abstract class Container implements ReporteVisitable {
 	LocalDateTime fechaDeIngreso; 
 	LocalDateTime fechaDeRetiro; 
 	String tipo;
+	TipoCarga tipoPermitido;
 	
 	
 	public Container(int alto, int ancho, int largo, double pesoTotal, String idContainer, LocalDateTime fechaDeIngreso, LocalDateTime fechaDeRetiro) {
@@ -33,6 +34,7 @@ public abstract class Container implements ReporteVisitable {
 		this.idContainer = idContainer;
 		this.fechaDeIngreso = fechaDeIngreso;
 		this.fechaDeRetiro = fechaDeRetiro;
+		
 		
 	}
 	
@@ -53,6 +55,9 @@ public abstract class Container implements ReporteVisitable {
     public double getLargo() {
         return largo;
     }
+    
+    public abstract TipoCarga getTipoPermitido();
+    
   // establece la fecha de retiro 
     public void registrarRetiro(LocalDateTime fechaDeRetiro) {
     	this.fechaDeRetiro = fechaDeRetiro;
@@ -94,8 +99,10 @@ public abstract class Container implements ReporteVisitable {
         visitor.visit(this);
     }
 
-	
-	
-
+    public boolean aceptaCarga(BillOfLading bl) {
+    	 return bl.getTipo() == this.tipoPermitido;
+    }
+    
+    
 	
 }

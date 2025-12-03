@@ -4,7 +4,9 @@ import java.time.LocalDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import actores.ActorPortuario;
 import actores.Consignee;
@@ -44,6 +46,9 @@ public class TerminalGestionada{
 	List<Chofer> choferes = new ArrayList<>();
 	List<Orden> ordenes = new ArrayList<>();
 	List<Viaje> viajesProgramados = new ArrayList<>();
+	List<Container> containers = new ArrayList<>();
+	Set<Servicio> servicios = new HashSet<>();
+	
 	
 	
 	
@@ -246,5 +251,24 @@ public class TerminalGestionada{
 		return criterioSeleccion;
 	}
 	
+	public void iniciarServicioParaElContainer(Container c, Servicio s) {
+		c.addServicio(s);
+	}
 	
+	public Set<Servicio> getServicios() {
+		return servicios;
+	}
+	
+	public List<Container> getContainers() { 
+		return containers;
+	}
+	
+	public void addServicio(Servicio s) {
+		servicios.add(s);
+	}
+
+	public double costoTotalDeServiciosEnContainer(Container c) {
+		
+		return c.costoTotalDeServicios();
+	}
 }

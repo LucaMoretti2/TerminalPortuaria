@@ -1,6 +1,7 @@
 package empresaMaritima;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +20,7 @@ public class Viaje {
 	CircuitoMaritimo circuito;
 	TerminalGestionada terminalOrigen;
 	TerminalGestionada terminalDestino;
+	List<String> terminales = new ArrayList<>();
 	
 	public Viaje(int idViaje, LocalDateTime fechaInicio, Buque buque, Naviera naviera, CircuitoMaritimo circuito, TerminalGestionada origen, TerminalGestionada destino) {
 		this.idViaje = idViaje;
@@ -80,5 +82,30 @@ public class Viaje {
 	            " | Partida: " + fechaInicio +
 	            " | Arribo estimado: " + fechaArriboDestino;
 	}
+	
+    public List<String> getTerminalesRecorridas() {
+        List<String> terminales = new ArrayList<>();
+
+        for (Tramo tramo : circuito.getTramos()) {
+            terminales.add(tramo.getTerminalOrigen().getNombre());
+            terminales.add(tramo.getTerminalDestino().getNombre());
+        }
+
+        return terminales.stream().distinct().toList();
+    }
+	public int getId() {
+		// TODO Auto-generated method stub
+		return idViaje;
+	}
+	public TerminalGestionada getTerminalOrigen() {
+		// TODO Auto-generated method stub
+		return terminalOrigen;
+	}
+	
+	public TerminalGestionada getTerminalDestino() {
+		// TODO Auto-generated method stub
+		return terminalDestino;
+	}
+
 	
 }

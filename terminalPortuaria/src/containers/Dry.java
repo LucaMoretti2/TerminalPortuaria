@@ -9,16 +9,22 @@ public class Dry extends Container {
 // una lista de BL asociados a la mercadería que contiene.
 	private List<BillOfLading> bls = new ArrayList<>();
 	
+	
 	public Dry(int alto, int ancho, int largo, double pesoTotal, String idContainer, LocalDateTime fechaDeIngreso, LocalDateTime fechaDeRetiro) {
 		super(alto, ancho, largo, pesoTotal, idContainer, fechaDeIngreso, fechaDeRetiro);
 //Aca le pasa el tipo que es
 		this.tipo = "Dry";
-		// TODO Auto-generated constructor stub
+		this.tipoPermitido = TipoCarga.SECA;
+	
 	}
 //agrega un Bill of Lading al contenedor
 	public void addBl(BillOfLading bl) {
-		bls.add(bl);	
+		 if (!aceptaCarga(bl)) {
+		        throw new IllegalArgumentException("Dry no puede transportar carga de tipo: " + bl.getTipo());
+		    }
+		 bls.add(bl);	
 	}
+	
 //devuelve una copia inmutable de los BL registrados
 	public List<BillOfLading> getBls() {
         return List.copyOf(bls);
@@ -40,4 +46,10 @@ public class Dry extends Container {
 	public boolean esDesconsolidado() {
         return bls.size() <= 1;
     }
+@Override
+public TipoCarga getTipoPermitido() {
+	// TODO Auto-generated method stub
+	return tipoPermitido;
+}
+	
 }

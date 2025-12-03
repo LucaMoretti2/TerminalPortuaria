@@ -12,13 +12,14 @@ public class Reefer extends Container {
 	LocalDateTime finConexion;
 	double horasConectado;
 	BillOfLading bl; 
-	
+	TipoCarga tipoPermitido;
 	
 	public Reefer(int alto, int ancho, int largo, double pesoTotal, String idContainer, double consumoPorHora, LocalDateTime fechaDeIngreso, LocalDateTime fechaDeRetiro) {
 		super(alto, ancho, largo, pesoTotal, idContainer, fechaDeRetiro, fechaDeRetiro);
 		this.consumoPorHora = consumoPorHora;
 	//Aca define el tipo
 		this.tipo = "Reefer";
+		this.tipoPermitido = TipoCarga.REFRIGERADA;
 	
 	}
 //consumo energético del reefer por hora de conexión
@@ -52,6 +53,15 @@ public class Reefer extends Container {
 	    return idContainer;
 	}
 	public void setBl(BillOfLading bl) {
-		this.bl= bl;
+		  if (!aceptaCarga(bl)) {
+		        throw new IllegalArgumentException("Reefer no puede transportar carga de tipo: " + bl.getTipo());
+		    }
+		  this.bl = bl;
 	}
+	@Override
+	public TipoCarga getTipoPermitido() {
+		// TODO Auto-generated method stub
+		return tipoPermitido;
+	}
+
 }

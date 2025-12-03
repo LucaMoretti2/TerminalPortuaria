@@ -1,20 +1,17 @@
 package playground;
 
 import java.time.LocalDateTime;
-
 import java.util.Date;
-import java.util.List;
 
 import actores.Consignee;
 import actores.Shipper;
-import buscador.BuscadorAnd;
 import buscador.BuscadorDeTrayectosStrategy;
 import buscador.BuscadorPorFechaDeLlegada;
-import buscador.BuscadorPorPuertoDestino;
 import containers.BillOfLading;
 import containers.Dry;
 import containers.Reefer;
 import containers.Tanque;
+import containers.TipoCarga;
 import empresaMaritima.Buque;
 import empresaMaritima.Camion;
 import empresaMaritima.Chofer;
@@ -37,6 +34,7 @@ import reportes.ReporteAduanaVisitor;
 import reportes.ReporteBuqueVisitor;
 import reportes.ReporteMuelleVisitor;
 import serviciosDeContainer.Almacenamiento;
+import serviciosDeContainer.Electricidad;
 import serviciosDeContainer.Lavado;
 import serviciosDeContainer.Servicio;
 
@@ -46,216 +44,174 @@ public class Playground {
 
         System.out.println("========== PLAYGROUND TERMINAL PORTUARIA ==========");
 
-        //creacion de la terminal
-        BuscadorDeTrayectosStrategy motorDeBusqueda = new BuscadorPorFechaDeLlegada(null,null);
+        // === Terminales ===
+        BuscadorDeTrayectosStrategy motorDeBusqueda = new BuscadorPorFechaDeLlegada(null, null);
         TerminalGestionada uruguay = new TerminalGestionada(1000.0, "Uruguay", motorDeBusqueda);
         TerminalGestionada buenosAires = new TerminalGestionada(20.0, "Puerto Buenos Aires", motorDeBusqueda);
+
         
-        System.out.println("Terminal creada en posición 1000.0");
-       
-        //creacion de un tramo
+        // === Tramo y circuito inicial ===
         long dosHorasEnMilis = 2L * 60 * 60 * 1000;
         Date fecha = new Date(dosHorasEnMilis);
-        Tramo tramo1 = new Tramo(2000.0,fecha , uruguay, buenosAires);
-        
-        //creacion de circuito maritimo
+        Tramo tramo1 = new Tramo(2000.0, fecha, uruguay, buenosAires);
+
         CircuitoMaritimo circuito = new CircuitoMaritimo("Rio de la Plata");
         circuito.agregarTramo(tramo1);
 
-        //creacion de un buque
+        // === Buque ===
         Buque buque = new Buque("Malvinas", 35.8, null);
         System.out.println("Buque creado: " + buque.getNombre());
 
-        //Creacion de contenedores
+
+        // === Contenedores ===
         LocalDateTime ingreso = LocalDateTime.of(2025, 1, 1, 8, 0);
         LocalDateTime retiro = LocalDateTime.of(2025, 1, 3, 10, 0);
-       
+
         Dry dry = new Dry(2, 2, 6, 4000, "dry123", ingreso, retiro);
         Reefer reefer = new Reefer(2, 2, 6, 5000, "ref123", 12.5, ingreso, retiro);
         Tanque tanque = new Tanque(2, 2, 6, 7000, "tank123", ingreso, retiro, "nafta", 3000);
-        
-        //agregar los bls al Dry
+
+        // === BLs ===
         Consignee consignee = new Consignee("Luca Moretti", 123);
         Consignee consignee2 = new Consignee("Hospital Algerich", 999);
         Consignee consignee3 = new Consignee("YPF", 555);
-        BillOfLading bl1= new BillOfLading("rtx 5080",0.5, consignee);
-        BillOfLading bl2= new BillOfLading("intel i9",0.5, consignee);
-        BillOfLading bl3= new BillOfLading("nafta",1000.0, consignee3);
-        BillOfLading bl4= new BillOfLading("vacunas",100.0, consignee2);
-        
+
+        BillOfLading bl1 = new BillOfLading("rtx 5080", 0.5, consignee, TipoCarga.SECA);
+        BillOfLading bl2 = new BillOfLading("intel i9", 0.5, consignee, TipoCarga.SECA);
+        BillOfLading bl3 = new BillOfLading("nafta", 1000.0, consignee3, TipoCarga.LIQUIDA);
+        BillOfLading bl4 = new BillOfLading("vacunas", 100.0, consignee2, TipoCarga.REFRIGERADA);
+
         dry.addBl(bl1);
         dry.addBl(bl2);
         tanque.setBl(bl3);
         reefer.setBl(bl4);
+
         System.out.println("=== Contenedores creados ===");
-        System.out.println(" - Dry: " + dry.getBls());
-        System.out.println(" - Reefer: " + reefer.getBl());
-        System.out.println(" - Tanque: " + tanque.getBl() );
-        System.out.println("Dry contiene BLs con peso total: " + dry.getPesoTotalDeBLs() + " kg");
-        //agregar los  contenedores al buque
+        System.out.println("Dry BLs: " + dry.getBls());
+        System.out.println("Reefer BL: " + reefer.getBl());
+        System.out.println("Tanque BL: " + tanque.getBl());
+
+
+        // === Cargar contenedores en el buque ===
         buque.addContainer(dry);
         buque.addContainer(reefer);
         buque.addContainer(tanque);
 
-        System.out.println("El buque Malvinas tiene ahora " + buque.getCargas().size() + " contenedores");
-        System.out.println("===========================");
-        //conectar un  Reefer
+        System.out.println("Buque Malvinas tiene " + buque.getCargas().size() + " contenedores");
+
+
+        // === Conexión eléctrica del Reefer ===
         reefer.conectar(LocalDateTime.of(2025, 1, 1, 9, 0));
         reefer.desconectar(LocalDateTime.of(2025, 1, 1, 21, 0));
 
-        System.out.println("Reefer estuvo conectado por " + reefer.getHorasConectado() + " horas");
-        System.out.println("Consumo por hora: " + reefer.getConsumoPorHora() + " kwh");
+        System.out.println("Reefer estuvo conectado " + reefer.getHorasConectado() + " horas");
 
-        //agregar los servicios
-        Servicio lavado = new Lavado(300, 10, 500, 300); 
+
+        // === Servicios ===
+        Servicio lavado = new Lavado(300, 10, 500, 300);
         Servicio almacenamiento = new Almacenamiento(200);
+        Servicio electricidad = new Electricidad(200,reefer.getHorasConectado());
 
-        dry.addServicio(lavado);
-        reefer.addServicio(almacenamiento);
+        uruguay.addServicio(lavado);
+        uruguay.addServicio(almacenamiento);
+        uruguay.addServicio(electricidad);
+        
+        uruguay.iniciarServicioParaElContainer(tanque, almacenamiento);
+        uruguay.iniciarServicioParaElContainer(reefer, electricidad);
+        uruguay.iniciarServicioParaElContainer(tanque, lavado);
 
-        System.out.println("Costo total de servicio  dry: $" + dry.costoTotalDeServicios());
-        System.out.println("Costo total de servicio reefer: $" + reefer.costoTotalDeServicios());
+        System.out.println("Costo servicios Dry: $" + uruguay.costoTotalDeServiciosEnContainer(dry));
+        System.out.println("Costo servicios Reefer: $" + uruguay.costoTotalDeServiciosEnContainer(reefer));
 
 
-        // simulacion de arribo y partida
-        System.out.println("=== Simulacion de arribo y partida ===");
+        // === Crear viaje ===
         LocalDateTime fecha2 = LocalDateTime.of(2025, 1, 2, 6, 0);
         Naviera colonia = new Naviera("Colonia Express");
-        TerminalGestionada rosario = new TerminalGestionada(1000, "Rio de la Plata", motorDeBusqueda);
-        Viaje viaje1 = new Viaje(123, fecha2, buque,colonia, circuito, uruguay, rosario );
-        viaje1.calcularFechaArribo(rosario);       
-        System.out.println("Buque arribo: " + viaje1.getArribo());
-        System.out.println("Buque partida: " + viaje1.getPartida());
-        System.out.println("======================================");
-        
-        //hacer una orden de importacion y exportacion
-        
+        TerminalGestionada rosario = new TerminalGestionada(1000, "Rosario", motorDeBusqueda);
+
+        Viaje viaje1 = new Viaje(123, fecha2, buque, colonia, circuito, uruguay, rosario);
+        buque.agregarViaje(viaje1);
+        viaje1.calcularFechaArribo(rosario);
+
+
+        // === Órdenes ===
         Shipper shipper1 = new Shipper("Camila Arena", 111);
-        //Shipper shipper2 = new Shipper("Marianela Carbone", 222);
-        //Shipper shipper3 = new Shipper("Diego Cano", 333);
-        EmpresaTransportista empresa1 = new EmpresaTransportista ("Arcos");
+        EmpresaTransportista empresa1 = new EmpresaTransportista("Arcos");
         Chofer chofer1 = new Chofer("Jorge");
-        Camion camion1 = new Camion("123",chofer1,empresa1);
-        OrdenDeExportacion ordenShipper = new OrdenDeExportacion(dry, viaje1, buque,shipper1, camion1, chofer1, LocalDateTime.now());
-        OrdenDeImportacion ordenConsignee = new OrdenDeImportacion(reefer,viaje1,buque,consignee, LocalDateTime.now());
+        Camion camion1 = new Camion("123", chofer1, empresa1);
 
-        System.out.println("=== Ordenes registradas ===");
-        System.out.println("Exportación: " + ordenShipper);
-        System.out.println("Importación: " + ordenConsignee);
-        System.out.println("===========================");
+        OrdenDeExportacion ordenShipper = new OrdenDeExportacion(dry, viaje1, buque, shipper1, camion1, chofer1, LocalDateTime.now());
+        OrdenDeImportacion ordenConsignee = new OrdenDeImportacion(reefer, viaje1, buque, consignee, LocalDateTime.now());
 
-        // ver  fases de buque
-        Outbound outbound = new Outbound();
-        Inbound inbound = new Inbound();
-        Arrived arrived = new Arrived();
-        Working working = new Working();
-        Departing departing = new Departing();
-        
-        System.out.println("=== Simulacion de estados ===");
-        buenosAires.registrarActorPortuario(consignee);
-        
-        buque.setEstado(outbound);
+        System.out.println("=== Órdenes registradas ===");
+        System.out.println(ordenShipper);
+        System.out.println(ordenConsignee);
 
-        outbound.actualizarPosicion(buque,40.0,buenosAires);
- 
-        inbound.actualizarPosicion(buque,0.0,buenosAires);
 
-        arrived.actualizarPosicion(buque, 0.0, buenosAires);
+        // === Estados del Buque ===
+        buque.setEstado(new Outbound());
+        buque.getEstadoBuque().actualizarPosicion(buque, 40.0, buenosAires);
 
-        working.actualizarPosicion(buque, 0.0, buenosAires);
+        buque.setEstado(new Inbound());
+        buque.getEstadoBuque().actualizarPosicion(buque, 0.0, buenosAires);
 
-        departing.actualizarPosicion(buque,60.0,buenosAires);
-        System.out.println("=============================");
-        
-       //creacion de factura
-     
+        buque.setEstado(new Arrived());
+        buque.getEstadoBuque().actualizarPosicion(buque, 0.0, buenosAires);
+
+        buque.setEstado(new Working());
+        buque.getEstadoBuque().actualizarPosicion(buque, 0.0, buenosAires);
+
+        buque.setEstado(new Departing());
+        buque.getEstadoBuque().actualizarPosicion(buque, 60.0, buenosAires);
+
+
+        // === Facturas ===
         Factura facturaShipper = ordenShipper.generarFactura();
         Factura facturaConsignee = ordenConsignee.generarFactura();
-        System.out.println("=== Facturas generadas ===");
-        System.out.println("Factura Exportación $" + facturaShipper.getTotal());
-        System.out.println("Factura Importación  $" + facturaConsignee.getTotal());
-    
-        System.out.println("===============================");
-        //envio por mail 
+
         facturaShipper.enviarPorMail();
         facturaConsignee.enviarPorMail();
-        
-        System.out.println("==========================");
-        System.out.println("=== Busqueda de trayectos ===");
-        
-        //Datos para el buscador Destino y buscadorAnd
-        BuscadorDeTrayectosStrategy buscadorDestino = new BuscadorPorPuertoDestino(uruguay.getCircuitos());
-        TerminalGestionada destinoBusqueda = rosario;
-        LocalDateTime sinFecha = null;	//NO hay fechas para este buscador
-        LocalDateTime fechaLimiteAND = LocalDateTime.of(2025, 1, 10, 0, 0);
-        BuscadorDeTrayectosStrategy criterioFecha = new BuscadorPorFechaDeLlegada(uruguay.getCircuitos(), fechaLimiteAND);
-        BuscadorAnd buscadorAnd = new BuscadorAnd(buscadorDestino, criterioFecha);
-        
-        System.out.println("Buscando circuitos hacia: " + rosario.getNombre());
-        System.out.println("Fecha límite para llegada: " + fechaLimiteAND);
-        
-        //BuscadorPorPuestoDestino
-        List<CircuitoMaritimo> circuitosEncontrados = buscadorDestino.buscar(destinoBusqueda, sinFecha); 
-        
-        if (circuitosEncontrados.isEmpty()) {
-            System.out.println("No hay circuitos directos hacia " + destinoBusqueda.getNombre());
-        } else {
-            for (CircuitoMaritimo c : circuitosEncontrados) {
-                System.out.println("Circuito encontrado según destino: " + c.getNombre());
-            }
-        } 
-        
-        //buscadorAnd
-        List<CircuitoMaritimo> resultadoAND = buscadorAnd.buscar(rosario, fechaLimiteAND);
-        
-        if (resultadoAND.isEmpty()) {
-            System.out.println("No hay circuitos que cumplan ambos criterios (destino + fecha).");
-        } else {
-            System.out.println("Circuitos que cumplen ambos criterios:");
-            resultadoAND.forEach(c -> System.out.println(" - " + c.getNombre()));
-        }
 
-        
-        //busqueda de rutas
-        Date duracion2Horas = new Date(2L * 60 * 60 * 1000);
-        Date duracion5Horas = new Date(5L * 60 * 60 * 1000);
-        Date duracion10Horas = new Date(10L * 60 * 60 * 1000);
-        
-        Tramo tramo2 = new Tramo(2000.0, duracion2Horas, uruguay, buenosAires);
-        Tramo tramo3 = new Tramo(3500.0, duracion5Horas, uruguay, rosario);
-        Tramo tramo4 = new Tramo(4500.0, duracion10Horas, uruguay, rosario);
-        
+
+        // === Circuitos adicionales ===
         CircuitoMaritimo circuito2 = new CircuitoMaritimo("Rutas Uruguay");
-        circuito2.agregarTramo(tramo2);
-        circuito2.agregarTramo(tramo3);
-        circuito2.agregarTramo(tramo4);
+        circuito2.agregarTramo(new Tramo(2000, new Date(2L * 3600000), uruguay, buenosAires));
+        circuito2.agregarTramo(new Tramo(3500, new Date(5L * 3600000), uruguay, rosario));
+        circuito2.agregarTramo(new Tramo(4500, new Date(10L * 3600000), uruguay, rosario));
+
         uruguay.registrarCircuitoMaritimo(circuito2);
-        MenorTiempo criterio = new MenorTiempo();
-        uruguay.setCriterioSeleccion(criterio);
-        CircuitoMaritimo mejorCircuito = uruguay.obtenerMejorCircuito(rosario);
-        if (mejorCircuito != null) {
-            System.out.println("Mejor circuito encontrado: " + mejorCircuito.getNombre());
-        } else {
-            System.out.println("No hay circuitos disponibles.");
+        uruguay.setCriterioSeleccion(new MenorTiempo());
+
+        System.out.println("Mejor circuito: " + uruguay.obtenerMejorCircuito(rosario).getNombre());
+
+
+        // === Reportes ===
+        System.out.println("=== Reporte Buque ===");
+        buque.accept(new ReporteBuqueVisitor());
+
+        System.out.println("=== Reporte Aduana ===");
+        buque.accept(new ReporteAduanaVisitor());
+
+        System.out.println("=== Reporte Muelle ===");
+        buque.accept(new ReporteMuelleVisitor());
+
+
+        System.out.println("\n=== REGISTRO COMPLETO DE VIAJES DEL BUQUE ===");
+        for (String registro : buque.getRegistroDeViajes()) {
+            System.out.println(registro);
         }
-        System.out.println("Criterio utilizado: " + uruguay.getCriterioSeleccion().getClass().getSimpleName());
-        System.out.println("===============================");
-        
-     
-        System.out.println("=== Generar reportes===");
-        System.out.println("=== Reporte de Buque ===");
-        ReporteBuqueVisitor reporteBuque = new ReporteBuqueVisitor();
-        buque.accept(reporteBuque);
-        System.out.println("=============================");
-        System.out.println("=== Reporte de Aduana ===");
-        ReporteAduanaVisitor reporteAduana = new ReporteAduanaVisitor();
-        buque.accept(reporteAduana);
-        System.out.println("=============================");
-        ReporteMuelleVisitor reporteMuelle = new ReporteMuelleVisitor();
-        buque.accept(reporteMuelle);
- 
 
-        System.out.println("========== FIN  ==========");
+        System.out.println("\n=== TERMINALES VISITADAS POR EL BUQUE ===");
+        System.out.println(buque.getTerminalesVisitadas());
+
+        System.out.println("\n=== CARGA TOTAL TRANSPORTADA POR EL BUQUE (BLs) ===");
+        System.out.println(buque.getCargaTransportada());
+
+        System.out.println("\n=== DETALLE DE CARGA POR CADA CONTENEDOR ===");
+        for (String detalle : buque.getDetallesCargaPorContenedor()) {
+            System.out.println(detalle);
+        }
+
+        System.out.println("\n========== FIN  ==========");
     }
-
 }

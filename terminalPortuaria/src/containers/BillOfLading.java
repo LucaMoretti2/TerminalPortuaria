@@ -9,14 +9,18 @@ public class BillOfLading {
 	String tipoDeProducto;
 	double peso;
 	Consignee importador;
+	TipoCarga tipo;
 
 //Información comercial vinculada al container y se
 //utiliza para identificar el contenido y al destinatario de la mercancía.
 	
-	public BillOfLading(String tipoDeProducto, double peso, Consignee importador) {
+	public BillOfLading(String tipoDeProducto, double d, Consignee consignee, TipoCarga tipo) {
 		this.tipoDeProducto = tipoDeProducto;
-		this.peso = peso;
-		this.importador = importador;
+		this.peso = d;
+		this.importador = consignee;
+		this.tipo = tipo;
+	
+		
 	}
 	
 	
@@ -25,6 +29,10 @@ public class BillOfLading {
 	}
 	public String getTipoDeProducto() { 
 		return tipoDeProducto; 
+	}
+	
+	public TipoCarga getTipo() {
+	    return tipo;
 	}
 	
     public double getPeso() { 
