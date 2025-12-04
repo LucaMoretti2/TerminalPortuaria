@@ -116,12 +116,18 @@ public class Playground {
         uruguay.addServicio(almacenamiento);
         uruguay.addServicio(electricidad);
         
-        uruguay.iniciarServicioParaElContainer(tanque, almacenamiento);
+ 
+        uruguay.iniciarServicioParaElContainer(dry, lavado);
+        uruguay.iniciarServicioParaElContainer(dry, almacenamiento);
         uruguay.iniciarServicioParaElContainer(reefer, electricidad);
+        uruguay.iniciarServicioParaElContainer(reefer, almacenamiento);
         uruguay.iniciarServicioParaElContainer(tanque, lavado);
+        uruguay.iniciarServicioParaElContainer(tanque, almacenamiento);
+
 
         System.out.println("Costo servicios Dry: $" + uruguay.costoTotalDeServiciosEnContainer(dry));
         System.out.println("Costo servicios Reefer: $" + uruguay.costoTotalDeServiciosEnContainer(reefer));
+        System.out.println("Costo servicios Tanque: $" + uruguay.costoTotalDeServiciosEnContainer(tanque));
 
 
         // === Crear viaje ===
