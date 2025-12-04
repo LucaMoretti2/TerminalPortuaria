@@ -9,13 +9,16 @@ import java.util.List;
 
 import actores.*;
 import buscador.BuscadorDeTrayectosStrategy;
+import containers.Dry;
 import empresaMaritima.*;
 import ordenes.*;
+import serviciosDeContainer.Servicio;
 
 class TerminalGestionadaTestCase {
 
 	@BeforeEach
 	void setUp() throws Exception {
+	
 	}
 
 	@Test
@@ -114,6 +117,28 @@ class TerminalGestionadaTestCase {
 
 		 assertEquals(LocalDateTime.of(2025, 1, 5, 8, 0), proxima);
 	    }
-	 
+	// Test 4: Cálculo del costo total de servicios aplicados al contenedor
+		@Test
+	    void testCostoTotalDeServicios() {
+			
+		    LocalDateTime ingreso = LocalDateTime.of(2025, 1, 1, 10, 0);
+		    LocalDateTime retiro = LocalDateTime.of(2025, 1, 2, 10, 0);
+			
+	        Dry container = new Dry(2, 3, 6, 5000, "1234", ingreso, retiro);
+	        BuscadorDeTrayectosStrategy buscador = mock(BuscadorDeTrayectosStrategy.class);
+	        TerminalGestionada terminal = new TerminalGestionada(10.0, "Buenos Aires", buscador);
+
+	        Servicio s1 = mock(Servicio.class);
+	        Servicio s2 = mock(Servicio.class);
+
+	        when(s1.getPrecioFijo()).thenReturn(100.0);
+	        when(s2.getPrecioFijo()).thenReturn(200.0);
+
+	        container.addServicio(s1);
+	        container.addServicio(s2);
+
+	        double total = terminal.costoTotalDeServiciosEnContainer(container);
+	        assertEquals(300, total);
+	    }
 	 
 }

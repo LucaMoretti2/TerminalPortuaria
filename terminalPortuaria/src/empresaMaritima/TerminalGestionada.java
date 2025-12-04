@@ -268,7 +268,10 @@ public class TerminalGestionada{
 	}
 
 	public double costoTotalDeServiciosEnContainer(Container c) {
-		
-		return c.costoTotalDeServicios();
+		double costoTotalHastaAhora = 0;
+		for (Servicio s: c.servicios) {
+			costoTotalHastaAhora += s.getPrecioFijo();
+		}
+		return costoTotalHastaAhora;
 	}
 }

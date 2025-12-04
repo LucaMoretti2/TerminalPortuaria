@@ -19,7 +19,7 @@ public abstract class Container implements ReporteVisitable {
 	int largo;
 	double pesoTotal;
 	String idContainer; //4 letras 7 numeros
-	List<Servicio> servicios = new ArrayList<>();
+	public List<Servicio> servicios = new ArrayList<>();
 	LocalDateTime fechaDeIngreso; 
 	LocalDateTime fechaDeRetiro; 
 	String tipo;
@@ -76,15 +76,7 @@ public abstract class Container implements ReporteVisitable {
     public void addServicio(Servicio s) {
     	servicios.add(s);
     }
- //calcula el costo acumulado de los servicios
-    
-    public double costoTotalDeServicios() {
-        double costoHastaAhora = 0;
-        for (Servicio s : servicios) {
-            costoHastaAhora += s.getPrecioFijo(); 
-        }
-        return costoHastaAhora;
-    }
+
     
     public String getTipo() {
     	return tipo;

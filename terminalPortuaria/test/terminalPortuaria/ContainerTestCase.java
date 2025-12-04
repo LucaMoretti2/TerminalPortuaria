@@ -68,22 +68,6 @@ class ContainerTestCase {
 	    assertEquals(2500, tanque.getCapacidadDeLitros());
 	}
 	
-// Test 4: Cálculo del costo total de servicios aplicados al contenedor
-	@Test
-    void testCostoTotalDeServicios() {
-        Dry container = new Dry(2, 3, 6, 5000, "1234", ingreso, retiro);
 
-        Servicio s1 = mock(Servicio.class);
-        Servicio s2 = mock(Servicio.class);
-
-        when(s1.getPrecioFijo()).thenReturn(100.0);
-        when(s2.getPrecioFijo()).thenReturn(200.0);
-
-        container.addServicio(s1);
-        container.addServicio(s2);
-
-        double total = container.costoTotalDeServicios();
-        assertEquals(300, total);
-    }
 	
 }
